@@ -1,2 +1,0 @@
-# FrontendTeam_C
-
