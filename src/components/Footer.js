@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import "@fontsource/roboto";
 import "../assets/style/Footer.css";
 import footerLogo from "../assets/images/footerLogo.png";
-import gPlayLogo from "../assets/images/gPlayLogo.png";
+import gPlayLogo from "../assets/images/gplayLogo.png";
 import appStoreLogo from "../assets/images/appStoreLogo.png";
 import facebookLogo from "../assets/images/facebookLogo.png";
 import pinterestLogo from "../assets/images/pinterestLogo.png";
