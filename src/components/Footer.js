@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import "@fontsource/roboto";
 import "../assets/style/Footer.css";
 import footerLogo from "../assets/images/footerLogo.png";
-import gplayLogo from "../assets/images/gplayLogo.png";
+import gPlayLogo from "../assets/images/gPlayLogo.png";
 import appStoreLogo from "../assets/images/appStoreLogo.png";
 import facebookLogo from "../assets/images/facebookLogo.png";
 import pinterestLogo from "../assets/images/pinterestLogo.png";
@@ -16,7 +16,7 @@ const Footer = () => {
     { image: instagramLogo },
   ];
 
-  const footerDownload = [{ image: gplayLogo }, { image: appStoreLogo }];
+  const footerDownload = [{ image: gPlayLogo }, { image: appStoreLogo }];
 
   const footerCenter = [
     { title: "Tentang Kami" },
@@ -53,8 +53,8 @@ const Footer = () => {
             <div className="footer__about">
               <ul className="footer__center">
                 <li>
-                  {footerCenter.map((item) => (
-                    <div>
+                  {footerCenter.map((item, index) => (
+                    <div key={index}>
                       <p>{item.title}</p>
                     </div>
                   ))}
@@ -63,8 +63,8 @@ const Footer = () => {
               <div className="footer__right">
                 <h2>Download</h2>
                 <div className="footer__download">
-                  {footerDownload.map((item) => (
-                    <div>
+                  {footerDownload.map((item, index) => (
+                    <div key={index}>
                       <img src={item.image} alt="..." />
                     </div>
                   ))}
@@ -73,8 +73,8 @@ const Footer = () => {
                   <h2>Social Media</h2>
                 </div>
                 <div className="footer__socmed">
-                  {footerSocmed.map((item) => (
-                    <div>
+                  {footerSocmed.map((item, index) => (
+                    <div key={index}>
                       <img src={item.image} alt="..." />
                     </div>
                   ))}
