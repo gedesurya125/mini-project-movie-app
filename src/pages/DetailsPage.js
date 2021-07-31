@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-
+import { alpha, Button, Container, makeStyles, Typography } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
+import DetailsTab from '../components/DetailsTab';
 //MOCK DATA MOVIES =============================================
 const movieDetailsMock = {
   "id": "379686",
@@ -29,9 +30,69 @@ const movieDetailsMock = {
 //==============================================================
 
 const useStyles = makeStyles(theme => ({
-  posterImg: {
-    width: '100%'
+  posterContainer: {
+    // height: '91vh',
+    backgroundImage: `url(${movieDetailsMock.poster})`,
+    backgroundSize: 'cover',
+    // backgroundAttachment: 'fixed',
+    '& h3.MuiTypography-root, h5.MuiTypography-root  ': {
+      fontWeight: 'bold'
+    },
+    '& .MuiTypography-root': {
+      textAlign: 'center',
+      [theme.breakpoints.up('sm')]: {
+        textAlign: 'left'
+      },
+      color: theme.palette.common.white,
+    }
+
+  },
+  detailsContainer: {
+    padding: theme.spacing(5, 0),
+    background: alpha(theme.palette.common.black, 0.5),
+    height: '100%'
+  },
+  rating: {
+
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    margin: theme.spacing(1, 0),
+    '& .MuiRating-root': {
+      marginRight: theme.spacing(1)
+    },
+    justifyContent: 'center',
+    [theme.breakpoints.up('sm')]:{
+      justifyContent: 'flex-start'
+    },
+  },
+
+  briefDescription: {
+    maxWidth: '100%',
+    [theme.breakpoints.up('sm')]:{
+      maxWidth: '60%',
+    },
+    margin: theme.spacing(8, 0)
+  },
+
+
+  detailsAction:{
+    '& .MuiButton-root':{
+      display: 'block',
+      margin: theme.spacing(2, 'auto'),
+      [theme.breakpoints.up('sm')]:{
+        display: 'inline-block',
+        marginRight: theme.spacing(2),
+      }
+    },
+  },
+
+  buttonSaveWatch: {
+    color: 'white',
+    borderColor: 'white',
+    // marginLeft: theme.spacing(2)
   }
+
 }))
 
 
@@ -39,9 +100,30 @@ const DetailsPage = () => {
   const classes = useStyles()
   return (
     <div>
-      <div>
-        <img className={classes.posterImg} src={movieDetailsMock.poster} alt="..."/>
+      {/* POSTER TOP */}
+      <div className={classes.posterContainer}>
+        <div className={classes.detailsContainer}>
+          <Container>
+            <Typography variant="h3" component="h3">{movieDetailsMock.title}</Typography>
+            <div className={classes.rating}>
+              <Rating name="half-rating-read" defaultValue={movieDetailsMock.average_rating} max={10} size="large" precision={0.1} readOnly />
+              <Typography variant="h5">{movieDetailsMock.total_review} Reviews</Typography>
+            </div>
+            <Typography className={classes.briefDescription} variant="body1">
+              {movieDetailsMock.brief_description}
+            </Typography>
+            <div className={classes.detailsAction}>
+              <Button variant="contained" size="large" color="primary">Watch Trailer</Button>
+              <Button variant="outlined" size="large" className={classes.buttonSaveWatch}>Add To Watchlist</Button>
+            </div>
+          </Container>
+        </div>
       </div>
+
+
+      <Container>
+        <DetailsTab movieDetails = {movieDetailsMock}/>
+      </Container>
     </div>
   )
 }
