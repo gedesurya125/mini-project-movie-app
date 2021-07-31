@@ -30,11 +30,11 @@ const useStyles = makeStyles(theme => ({
   },
 
   login: {
-    // marginLeft: theme.spacing('auto')
-    display: 'none',
-    [theme.breakpoints.up('sm')]:{
-      display: 'block'
-    },
+    marginLeft: theme.spacing(1)
+    // display: 'none',
+    // [theme.breakpoints.up('sm')]:{
+    //   display: 'block'
+    // },
   }
 }))
 
@@ -76,7 +76,7 @@ const Header = () => {
 
 
           <div className={classes.login}>
-            <Button variant="contained" color="primary" onClick={toggleOpenLogin}>Sign in</Button>
+            <Button variant="contained" color="primary" onClick={toggleOpenLogin}>Login</Button>
           </div>
         </Toolbar>
       </Container>

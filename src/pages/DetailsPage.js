@@ -2,7 +2,12 @@ import React from 'react';
 import { alpha, Button, Container, makeStyles, Typography } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import DetailsTab from '../components/DetailsTab';
+
 //MOCK DATA MOVIES =============================================
+// Kalau sudah ada API, mock data ini di hapus, 
+// Lakukan dispatch GET_MOVIE_DETAILS, GET_MOVIE_ACTORS, dan GET_MOVIE_REVIEW data dari page ini berdasarkan ID yang diterima dari params pakai useParams()
+// Masing masing pannel menggunakan useSelector untuk mengambil data terkait dari store
+
 const movieDetailsMock = {
   "id": "379686",
   "title": "Space Jam: A New Legacy",
@@ -25,7 +30,7 @@ const movieDetailsMock = {
   },
   "average_rating": 7.8,
   "total_review": 1263,
-  "trailler": "5qap5aO4i9A"
+  "trailer": "5qap5aO4i9A"
 }
 //==============================================================
 
@@ -62,25 +67,25 @@ const useStyles = makeStyles(theme => ({
       marginRight: theme.spacing(1)
     },
     justifyContent: 'center',
-    [theme.breakpoints.up('sm')]:{
+    [theme.breakpoints.up('sm')]: {
       justifyContent: 'flex-start'
     },
   },
 
   briefDescription: {
     maxWidth: '100%',
-    [theme.breakpoints.up('sm')]:{
+    [theme.breakpoints.up('sm')]: {
       maxWidth: '60%',
     },
     margin: theme.spacing(8, 0)
   },
 
 
-  detailsAction:{
-    '& .MuiButton-root':{
+  detailsAction: {
+    '& .MuiButton-root': {
       display: 'block',
       margin: theme.spacing(2, 'auto'),
-      [theme.breakpoints.up('sm')]:{
+      [theme.breakpoints.up('sm')]: {
         display: 'inline-block',
         marginRight: theme.spacing(2),
       }
@@ -90,7 +95,6 @@ const useStyles = makeStyles(theme => ({
   buttonSaveWatch: {
     color: 'white',
     borderColor: 'white',
-    // marginLeft: theme.spacing(2)
   }
 
 }))
@@ -113,7 +117,11 @@ const DetailsPage = () => {
               {movieDetailsMock.brief_description}
             </Typography>
             <div className={classes.detailsAction}>
-              <Button variant="contained" size="large" color="primary">Watch Trailer</Button>
+              <a href="#trailer-movie" style={{ textDecoration: 'none', color: 'white' }}>
+                <Button variant="contained" size="large" color="primary">
+                  Watch Trailer
+                </Button>
+              </a>
               <Button variant="outlined" size="large" className={classes.buttonSaveWatch}>Add To Watchlist</Button>
             </div>
           </Container>
@@ -122,7 +130,7 @@ const DetailsPage = () => {
 
 
       <Container>
-        <DetailsTab movieDetails = {movieDetailsMock}/>
+        <DetailsTab movieDetails={movieDetailsMock} /> {/* Setelah Ada API props movieDetails dihapus */}
       </Container>
     </div>
   )

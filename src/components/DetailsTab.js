@@ -4,6 +4,7 @@ import { Tabs, Tab } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views';
 import TabPanel from './TabPanel';
 import OverViewPanel from './DetailPanels/OverViewPanel';
+import ActorsPanel from './DetailPanels/ActorsPanel';
 
 const MovDetailsTabs = withStyles(theme => ({
   root: {
@@ -86,13 +87,13 @@ export default function DetailsTab({movieDetails}) {
     <div className={classes.root}>
       <div className={classes.tabsContainer}>
         <MovDetailsTabs
-          variant="scrollable"
-          scrollButtons="auto"
+          // variant="scrollable"
+          // scrollButtons="auto"
           value={value}
           onChange={handleChange}
           aria-label="MovDetails example">
           <MovDetailsTab label="Overview" />
-          <MovDetailsTab label="Characters" />
+          <MovDetailsTab label="Actors" />
           <MovDetailsTab label="Review" />
         </MovDetailsTabs>
       </div>
@@ -106,7 +107,7 @@ export default function DetailsTab({movieDetails}) {
           <OverViewPanel movieDetails = {movieDetails}/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Characters
+          <ActorsPanel/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Review
