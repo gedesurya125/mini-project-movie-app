@@ -117,7 +117,7 @@ const DetailsPage = () => {
               {movieDetailsMock.brief_description}
             </Typography>
             <div className={classes.detailsAction}>
-              <a href="#trailer-movie" style={{ textDecoration: 'none', color: 'white' }}>
+              <a href={`https://www.youtube.com/watch?v=${movieDetailsMock.trailer}`} rel="noreferrer" target="_blank" style={{ textDecoration: 'none', color: 'white' }}>
                 <Button variant="contained" size="large" color="primary">
                   Watch Trailer
                 </Button>

@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import headerlogo from '../assets/img/headerlogo.png'
-import { AppBar, Container, IconButton, Toolbar, TextField, makeStyles, InputAdornment, Button, Typography } from '@material-ui/core'
+import { AppBar, Container, Toolbar, TextField, makeStyles, InputAdornment, Button, Typography } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import LoginModal from './LoginModal';
 
@@ -8,29 +8,35 @@ const useStyles = makeStyles(theme => ({
   root: {
     background: 'white'
   },
-  logoText:{
+  logo:{
+    display: 'flex'
+  },
+  logoText: {
     display: 'none',
-    [theme.breakpoints.up('md')]:{
+    [theme.breakpoints.up('md')]: {
       display: "block"
     }
   },
   toolbar: {
     // width: '100%'
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    '& img': {
+      marginRight: theme.spacing(1.5)
+    }
   },
   search: {
     // width: '70%'
     width: '100%',
-    [theme.breakpoints.up('sm')]:{
+    [theme.breakpoints.up('sm')]: {
       width: '50%'
     },
-    [theme.breakpoints.up('md')]:{
+    [theme.breakpoints.up('md')]: {
       width: '60%'
     }
   },
 
   login: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1.5)
     // display: 'none',
     // [theme.breakpoints.up('sm')]:{
     //   display: 'block'
@@ -52,11 +58,10 @@ const Header = () => {
     <AppBar position="sticky" className={classes.root}>
       <Container>
         <Toolbar variant="dense" disableGutters className={classes.toolbar}>
-          <IconButton>
+          <div className={classes.logo}>
             <img src={headerlogo} alt="" width="50em" />
-            <Typography className={classes.logoText} variant="h4">MilanTV</Typography>
-          </IconButton>
-
+            <Typography className={classes.logoText} component="span" color="textPrimary" variant="h4">MilanTV</Typography>
+          </div>
           <div className={classes.search}>
             <TextField
               placeholder="search movie ..."
@@ -80,7 +85,7 @@ const Header = () => {
           </div>
         </Toolbar>
       </Container>
-      <LoginModal isOpen={loginOpen} toggleOpenLogin={toggleOpenLogin}/>
+      <LoginModal isOpen={loginOpen} toggleOpenLogin={toggleOpenLogin} />
     </AppBar>
   )
 }

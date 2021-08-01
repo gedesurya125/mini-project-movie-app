@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import TabPanel from './TabPanel';
 import OverViewPanel from './DetailPanels/OverViewPanel';
 import ActorsPanel from './DetailPanels/ActorsPanel';
+import ReviewsPanel from './DetailPanels/ReviewsPanel';
 
 const MovDetailsTabs = withStyles(theme => ({
   root: {
@@ -87,8 +88,8 @@ export default function DetailsTab({movieDetails}) {
     <div className={classes.root}>
       <div className={classes.tabsContainer}>
         <MovDetailsTabs
-          // variant="scrollable"
-          // scrollButtons="auto"
+          variant="scrollable"
+          scrollButtons="auto"
           value={value}
           onChange={handleChange}
           aria-label="MovDetails example">
@@ -110,7 +111,7 @@ export default function DetailsTab({movieDetails}) {
           <ActorsPanel/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Review
+          <ReviewsPanel/>
         </TabPanel>
       </SwipeableViews>
     </div>

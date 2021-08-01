@@ -35,7 +35,7 @@ const ActorsPhotoCard = ({ actor }) => {
       width: '100%',
       bottom: '20px',
       left: '0px',
-      background: theme.palette.primary.dark,
+      background: `linear-gradient(90deg, ${theme.palette.primary.dark},${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
       textAlign: 'center',
       padding: theme.spacing(0.2, 0),
       // borderRadius: '1em',
