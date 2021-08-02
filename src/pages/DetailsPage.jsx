@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    margin: theme.spacing(1, 0),
+    margin: theme.spacing(1, 0), 
     '& .MuiRating-root': {
       marginRight: theme.spacing(1)
     },
@@ -111,7 +111,7 @@ const DetailsPage = () => {
             <Typography variant="h3" component="h3">{movieDetailsMock.title}</Typography>
             <div className={classes.rating}>
               <Rating name="half-rating-read" defaultValue={movieDetailsMock.average_rating} max={10} size="large" precision={0.1} readOnly />
-              <Typography variant="h5">{movieDetailsMock.total_review} Reviews</Typography>
+              <Typography variant="h5">({movieDetailsMock.average_rating}) {movieDetailsMock.total_review} Reviews</Typography>
             </div>
             <Typography className={classes.briefDescription} variant="body1">
               {movieDetailsMock.brief_description}

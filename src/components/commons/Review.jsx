@@ -34,7 +34,6 @@ const Review = () => {
         <Typography variant="h5">Headline</Typography>
         <Typography variant="body1">Proident fugiat sunt sit nisi deserunt in consequat. Ea non mollit id qui magna tempor ut cupidatat aliqua nulla consequat qui adipisicing ad. Culpa commodo elit incididunt dolor ut. Aliquip cupidatat aute consectetur officia elit qui pariatur aliqua. Proident incididunt nostrud sit pariatur pariatur anim.</Typography>
       </Grid>
-
     </Grid>
   )
 }

@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={()=>(<HomePage />)} /> {/**HomePage */}
         <Route path="/details/:movie_id" component={() => (<DetailsPage />)} />
+        <Route path="/user/profile/:user_id" component={() => (<UserProfilePage />)}/>
       </Switch>
       <Footer/>
     </Router>
