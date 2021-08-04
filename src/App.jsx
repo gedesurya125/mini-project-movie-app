@@ -7,21 +7,23 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
 import UserProfilePage from './pages/UserProfilePage';
+import AdminPage from './pages/AdminPage';
 
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getMoviesAction(1))
+    dispatch(getMoviesAction({page: 1, size: 10}))
   }, [dispatch])
   return (
     <Router>
-      <Header/>
+      <Header />
       <Switch>
-        <Route exact path="/" component={()=>(<HomePage />)} /> {/**HomePage */}
+        <Route exact path="/" component={() => (<HomePage />)} /> {/**HomePage */}
         <Route path="/details/:movie_id" component={() => (<DetailsPage />)} />
-        <Route path="/user/profile/:user_id" component={() => (<UserProfilePage />)}/>
+        <Route path="/user/profile/:user_id" component={() => (<UserProfilePage />)} />
+        <Route path="/admin" component={() => (<AdminPage />)} />
       </Switch>
-      <Footer/>
+      <Footer />
     </Router>
   )
 }

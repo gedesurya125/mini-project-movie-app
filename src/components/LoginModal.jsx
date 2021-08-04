@@ -81,7 +81,6 @@ const LoginModal = ({ isOpen, toggleOpenLogin }) => {
   const [displaySignUp, setdisplaySignUp] = useState(false); // sign in or sign up
   const classes = useStyles()
 
-
   // RETURN =======================================
   return (
     <Modal
@@ -100,7 +99,7 @@ const LoginModal = ({ isOpen, toggleOpenLogin }) => {
               <Typography variant="h3">MilanTV</Typography>
             </div>
             <Divider />
-            {displaySignUp ? <SignUpForm /> : <LoginForm />}
+            {displaySignUp ? <SignUpForm toggleOpenLogin={toggleOpenLogin} /> : <LoginForm toggleOpenLogin={toggleOpenLogin}/>}
             <div className={classes.cardInfo}>
               {displaySignUp ?
                 <Typography>Already have an account ?, <span className={`${classes.signLink} ${classes.signInColor}`} onClick={() => setdisplaySignUp(false)}>Sign In</span></Typography> :

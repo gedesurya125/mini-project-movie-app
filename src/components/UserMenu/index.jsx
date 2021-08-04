@@ -1,9 +1,9 @@
+import React from 'react';
 import { Divider, ListItemIcon, 
   ListItemText, 
   MenuItem,
   Typography
  } from '@material-ui/core';
-import React from 'react';
 import DefaultMenu from '../commons/DefaultMenu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -26,6 +26,8 @@ const UserMenu = ({open, onClose, anchorEl}) => {
     onClose();
     history.push('/user/profile/1');
   }
+
+
   return (
     <DefaultMenu open={open} onClose={onClose} anchorEl={anchorEl}> 
       <Typography variant="h6" align="center">{user.user_name}</Typography>

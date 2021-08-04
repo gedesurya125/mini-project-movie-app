@@ -4,16 +4,19 @@ import {
   IconButton,
   Button,
   InputAdornment,
+  CircularProgress,
 } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
+import {signUpUser} from '../../redux/actions/userAction'
+import { useHistory } from 'react-router-dom';
 
 
 // STYLES =================================================
 const useStyles = makeStyles(theme => ({
-
   cardActions: {
     display: 'flex',
     justifyContent: 'center',
@@ -28,10 +31,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // COMPONENT =================================================
-const SignUpForm = () => {
+const SignUpForm = ({toggleOpenLogin}) => {
   // STATES ==============================================
+  const dispatch =  useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const classes = useStyles()
+  const history = useHistory();
 
   // FORMIK VALIDATION YUP =================================================
   const validationOnSignUp = yup.object({
@@ -61,12 +67,25 @@ const SignUpForm = () => {
     password: '',
   };
 
+  const handleSubmitRegister = (values) => {
+    const newUser = [
+      values.user_name,
+      values.full_name,
+      values.email,
+      values.password,
+      values.image
+    ]
+    dispatch(signUpUser(...newUser));
+    setLoading(false);
+    history.push('/'); // redirect to home
+    toggleOpenLogin();
+  }
   const formik = useFormik({
     initialValues: initialFormikOnSignUp,
     validationSchema: validationOnSignUp,
     onSubmit: (values) => {
-      console.log(values);
-      alert(JSON.stringify(values));
+      setLoading(true);
+      handleSubmitRegister(values);
     },
   });
 
@@ -150,7 +169,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className={classes.cardActions}>
-          <Button type="submit" variant="contained" color="secondary" fullWidth>Sign up</Button> :
+          <Button startIcon={loading ? <CircularProgress thickness={6} size={20} color="primary"/> : null} type="submit" variant="contained" color="secondary" fullWidth>Sign up</Button> :
         </div>
     </form>
 

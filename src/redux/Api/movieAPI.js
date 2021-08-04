@@ -1,7 +1,9 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 // const movieAPI = axios.create({
-//   baseURL: "http://localhost:3000/movies"
+//   baseURL: "https://movie-development-v1.herokuapp.com"
 // })
+import { movieAPI } from "./setupAPI";
 
-export const getMovies = (page) => axios.get(`http://localhost:3001/movies-${page}`); // this will be used in saga
+// this will be used in saga
+export const getMovies = (params) => movieAPI.get(`/api/v1/movie`,{params}); 

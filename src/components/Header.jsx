@@ -69,7 +69,7 @@ const Header = () => {
     open: false,
     anchorEl: null
   })
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user) // get User Status
   const [search, setSearch] = useState({
     value: '',
     element: null
@@ -136,11 +136,11 @@ const Header = () => {
                 <IconButton onClick={handleUserMenuOpen}>
                   <Avatar
                     alt=""
-                    src={user?.image}
+                    src={user?.data?.image}
                     imgProps={{
                       className: classes.imageAvatar,
                     }}
-                  >{user?.user_name[0].toUpperCase()}</Avatar>
+                  >{user?.data?.username[0].toUpperCase()}</Avatar>
                 </IconButton> :
                 <Button variant="contained" color="primary" onClick={toggleOpenLogin}>Login</Button>
             }

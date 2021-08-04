@@ -14,24 +14,25 @@ import * as type from '../actions/actionTypes';
 
 
 const initialState = {
-  id: "1",
-  user_name: "surya",
-  full_name: "I Gede Surya Adi Pranata",
-  email: "gedesurya125@gmail.com",
-  image: "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg",
-  logged_in: true
+  data: {
+    id: "",
+    user_name: "",
+    full_name: "",
+    email: "",
+    image: "",
+    role: "",
+  },
+  logged_in: false
 }
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case type.SET_USER: return action.payload; // replace entire content of state with new one
+    case type.SET_USER: return {
+      data:action.payload,
+      logged_in: true
+    }; // replace entire content of state with new one
     case type.UNSET_USER: return {
-      ...state,
-      id: "",
-      user_name: "",
-      full_name: "",
-      email: "",
-      image: "",
+      data:{},
       logged_in: false
     };
     default: return state
