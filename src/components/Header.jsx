@@ -1,38 +1,57 @@
 import React, { useState } from 'react'
 import headerlogo from '../assets/img/headerlogo.png'
-import { AppBar, Container, Toolbar, TextField, makeStyles, InputAdornment, Button, Typography } from '@material-ui/core'
+import {
+  AppBar,
+  Container,
+  Toolbar,
+  TextField,
+  makeStyles,
+  InputAdornment,
+  Button,
+  Typography,
+  Avatar,
+  IconButton
+} from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import LoginModal from './LoginModal';
+import UserMenu from './UserMenu';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
     background: 'white'
   },
-  logo:{
+  logo: {
     display: 'flex'
   },
   logoText: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
-      display: "block"
+      display: "block",
+      margin: theme.spacing(0, 1)
     }
   },
   toolbar: {
     // width: '100%'
     justifyContent: 'space-around',
     '& img': {
-      marginRight: theme.spacing(1.5)
+      // marginRight: theme.spacing(1.5)
     }
   },
   search: {
     // width: '70%'
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '50%'
+      width: '80%'
     },
     [theme.breakpoints.up('md')]: {
-      width: '60%'
+      width: '75%'
     }
+  },
+
+  imageAvatar: {
+    width: '130%',
+    marginTop: '30%'
   },
 
   login: {
@@ -41,18 +60,49 @@ const useStyles = makeStyles(theme => ({
     // [theme.breakpoints.up('sm')]:{
     //   display: 'block'
     // },
-  }
+  },
 }))
 
 const Header = () => {
   const [loginOpen, setLoginOpen] = useState(false)
+  const [userMenu, setUserMenu] = useState({ // state for user menu list
+    open: false,
+    anchorEl: null
+  })
+  const user = useSelector(state => state.user)
+  const [search, setSearch] = useState({
+    value: '',
+    element: null
+  })
   const classes = useStyles();
 
   const toggleOpenLogin = () => {
     setLoginOpen(state => !state);
   }
 
+  const handleSearch = (e) => {
+    setSearch(state => ({
+      ...state,
+      value: e.target.value,
+      element: e.currentTarget
+    }))
+  }
 
+  const handleUserMenuOpen = (e) => {
+    setUserMenu(state => ({
+      ...state,
+      open: true,
+      anchorEl: e.currentTarget
+    }))
+  }
+
+  const handleUserMenuClose = () => {
+    setUserMenu(state => ({
+      ...state,
+      open: false,
+      anchorEl: null
+    }))
+  }
 
   return (
     <AppBar position="sticky" className={classes.root}>
@@ -64,6 +114,8 @@ const Header = () => {
           </div>
           <div className={classes.search}>
             <TextField
+              value={search.value}
+              onChange={handleSearch}
               placeholder="search movie ..."
               variant="outlined"
               size="small"
@@ -74,18 +126,32 @@ const Header = () => {
                   <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
-                ),
+                )
               }}
             />
           </div>
-
-
           <div className={classes.login}>
-            <Button variant="contained" color="primary" onClick={toggleOpenLogin}>Login</Button>
+            {
+              user?.logged_in ?
+                <IconButton onClick={handleUserMenuOpen}>
+                  <Avatar
+                    alt=""
+                    src={user?.image}
+                    imgProps={{
+                      className: classes.imageAvatar,
+                    }}
+                  >{user?.user_name[0].toUpperCase()}</Avatar>
+                </IconButton> :
+                <Button variant="contained" color="primary" onClick={toggleOpenLogin}>Login</Button>
+            }
           </div>
         </Toolbar>
       </Container>
       <LoginModal isOpen={loginOpen} toggleOpenLogin={toggleOpenLogin} />
+      <UserMenu open={userMenu.open} anchorEl={userMenu.anchorEl} onClose={handleUserMenuClose} />
+
+
+
     </AppBar>
   )
 }
