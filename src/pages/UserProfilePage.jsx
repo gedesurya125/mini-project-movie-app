@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 const UserProfilePage = () => {
   const history = useHistory();
   const [openModal, setOpenModal] = useState(false)
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user.data);
   const classes = useStyles()
 
   const toggleModalOpen = () => {
@@ -61,8 +61,8 @@ const UserProfilePage = () => {
           <Card className={classes.cardUser} elevation={3}>
             <CardContent className={classes.cardContent}>
               <Avatar alt={user.user_name} src={user.image} className={classes.userAvatar} />
-              <Typography className={classes.userName} variant="h4">{user.user_name}</Typography>
-              <Typography>{user.full_name}</Typography>
+              <Typography className={classes.userName} variant="h4">{user.username}</Typography>
+              <Typography>{user.fullname}</Typography>
               <Typography>{user.email}</Typography>
               <Typography>id : {user.id}</Typography>
               <div className={classes.actionButton}>

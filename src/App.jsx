@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getMoviesAction } from './redux/actions/moviesAction'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
@@ -8,11 +8,16 @@ import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
 import UserProfilePage from './pages/UserProfilePage';
 import AdminPage from './pages/AdminPage';
+import BackdropSpinner from './components/loading/BackdropSpinner';
+import { getLogedInUser } from './redux/actions/userAction';
 
 const App = () => {
   const dispatch = useDispatch()
+  const {loading} = useSelector(state => state.movies);
+  console.log(loading);
   useEffect(() => {
-    dispatch(getMoviesAction({page: 1, size: 10}))
+    dispatch(getMoviesAction({ page: 1, size: 10 }))
+    dispatch(getLogedInUser());
   }, [dispatch])
   return (
     <Router>
@@ -24,6 +29,7 @@ const App = () => {
         <Route path="/admin" component={() => (<AdminPage />)} />
       </Switch>
       <Footer />
+      <BackdropSpinner open={loading} />
     </Router>
   )
 }

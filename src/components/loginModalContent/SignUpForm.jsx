@@ -4,15 +4,17 @@ import {
   IconButton,
   Button,
   InputAdornment,
-  CircularProgress,
+  CircularProgress
 } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {signUpUser} from '../../redux/actions/userAction'
-import { useHistory } from 'react-router-dom';
+import { 
+  useHistory 
+} from 'react-router-dom';
 
 
 // STYLES =================================================
@@ -21,9 +23,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     margin: theme.spacing(6, 0),
-    // '& .MuiButtonBase-root':{
-    //   margin: theme.spacing(2)
-    // }
   },
   inputContainer: {
     marginBottom: theme.spacing(1),
@@ -35,9 +34,9 @@ const SignUpForm = ({toggleOpenLogin}) => {
   // STATES ==============================================
   const dispatch =  useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const classes = useStyles()
   const history = useHistory();
+  const {loading} = useSelector(state => state.user)
 
   // FORMIK VALIDATION YUP =================================================
   const validationOnSignUp = yup.object({
@@ -75,16 +74,15 @@ const SignUpForm = ({toggleOpenLogin}) => {
       values.password,
       values.image
     ]
-    dispatch(signUpUser(...newUser));
-    setLoading(false);
+    dispatch(signUpUser(...newUser))
     history.push('/'); // redirect to home
     toggleOpenLogin();
   }
+
   const formik = useFormik({
     initialValues: initialFormikOnSignUp,
     validationSchema: validationOnSignUp,
     onSubmit: (values) => {
-      setLoading(true);
       handleSubmitRegister(values);
     },
   });
@@ -98,7 +96,6 @@ const SignUpForm = ({toggleOpenLogin}) => {
     e.preventDefault()
   }
 
-  // RETURN =======================================
   return (
     <form onSubmit={formik.handleSubmit}>
         <div className={classes.inputContainer}>

@@ -4,6 +4,7 @@ import FileInput from '../../commons/FileInput';
 import { useFormik } from 'formik';
 import { userFormik } from '../../../tools/yupFormValidator';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,10 +21,14 @@ const useStyles = makeStyles(theme => ({
 }))
 const EditUserForm = () => {
   const [passVisible, setPassVisible] = useState(false);
+  const user = useSelector(state => state.data);
   const formik = useFormik({
     initialValues: {
-      ...userFormik.initialValues,
-      image: {}
+      user_name: user.username, //last edited
+      full_name: user.fullname,
+      email: user.email,
+      password: user.password,
+      image: user.image,
     },
     validationSchema: userFormik.validationSchema,
     onSubmit: (values) => {
