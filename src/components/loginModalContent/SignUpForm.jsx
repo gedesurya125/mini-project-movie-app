@@ -12,9 +12,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import {signUpUser} from '../../redux/actions/userAction'
-import { 
-  useHistory 
-} from 'react-router-dom';
+
 
 
 // STYLES =================================================
@@ -30,12 +28,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // COMPONENT =================================================
-const SignUpForm = ({toggleOpenLogin}) => {
+const SignUpForm = () => {
   // STATES ==============================================
   const dispatch =  useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const classes = useStyles()
-  const history = useHistory();
   const {loading} = useSelector(state => state.user)
 
   // FORMIK VALIDATION YUP =================================================
@@ -74,9 +71,10 @@ const SignUpForm = ({toggleOpenLogin}) => {
       values.password,
       values.image
     ]
-    dispatch(signUpUser(...newUser))
-    history.push('/'); // redirect to home
-    toggleOpenLogin();
+    dispatch(signUpUser(...newUser));
+
+    // history.push('/'); // redirect to home
+    // toggleOpenLogin();
   }
 
   const formik = useFormik({
@@ -95,6 +93,14 @@ const SignUpForm = ({toggleOpenLogin}) => {
   const handleMouseDownPassword = (e) => {
     e.preventDefault()
   }
+
+  // useEffect(() => {
+  //   if(data.logged_in){
+  //     console.log("Iam Runned");
+  //     toggleOpenLogin();
+  //     history.push('/');
+  //   }
+  // },[data.logged_in, history, toggleOpenLogin]);
 
   return (
     <form onSubmit={formik.handleSubmit}>

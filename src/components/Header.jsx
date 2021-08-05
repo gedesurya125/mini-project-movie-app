@@ -15,7 +15,8 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import LoginModal from './LoginModal';
 import UserMenu from './UserMenu';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModalLogInAction } from '../redux/actions/modalAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,7 +65,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = () => {
-  const [loginOpen, setLoginOpen] = useState(false)
+  const dispatch = useDispatch();
   const [userMenu, setUserMenu] = useState({ // state for user menu list
     open: false,
     anchorEl: null
@@ -76,8 +77,8 @@ const Header = () => {
   })
   const classes = useStyles();
 
-  const toggleOpenLogin = () => {
-    setLoginOpen(state => !state);
+  const openMoalLogIn = () => {
+    dispatch(openModalLogInAction());
   }
 
   const handleSearch = (e) => {
@@ -132,7 +133,7 @@ const Header = () => {
           </div>
           <div className={classes.login}>
             {
-              user?.logged_in ?
+              user?.logged_in ? //if Logged In
                 <IconButton onClick={handleUserMenuOpen}>
                   <Avatar
                     alt=""
@@ -141,13 +142,13 @@ const Header = () => {
                       className: classes.imageAvatar,
                     }}
                   >{user?.data?.username[0].toUpperCase()}</Avatar>
-                </IconButton> :
-                <Button variant="contained" color="primary" onClick={toggleOpenLogin}>Login</Button>
+                </IconButton> : //if not logged In
+                <Button variant="contained" color="primary" onClick={openMoalLogIn}>Login</Button>
             }
           </div>
         </Toolbar>
       </Container>
-      <LoginModal isOpen={loginOpen} toggleOpenLogin={toggleOpenLogin} />
+      <LoginModal/>
       <UserMenu open={userMenu.open} anchorEl={userMenu.anchorEl} onClose={handleUserMenuClose} />
 
 

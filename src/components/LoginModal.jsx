@@ -11,7 +11,8 @@ import React, { useState } from 'react';
 import headerLogo from '../assets/img/headerlogo.png'
 import LoginForm from './loginModalContent/LoginForm';
 import SignUpForm from './loginModalContent/SignUpForm';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { closeModalLogInAction } from '../redux/actions/modalAction';
 
 // STYLES =================================================
 const useStyles = makeStyles(theme => ({
@@ -76,20 +77,26 @@ const useStyles = makeStyles(theme => ({
 
 
 // COMPONENT =================================================
-const LoginModal = ({ isOpen, toggleOpenLogin }) => {
+const LoginModal = () => {
   // STATES ==============================================
   const [displaySignUp, setdisplaySignUp] = useState(false); // sign in or sign up
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const {modalLogIn} = useSelector(state => state.modals) //
 
+  const closeModalLogIn = () => {
+    dispatch(closeModalLogInAction());
+  }
+  console.log(modalLogIn);
   // RETURN =======================================
   return (
     <Modal
-      open={isOpen}
-      onClose={toggleOpenLogin}
+      open={modalLogIn} //
+      onClose={closeModalLogIn} //
       className={classes.root}
       closeAfterTransition
     >
-      <Fade in={isOpen}>
+      <Fade in={modalLogIn}>
 
         <Card className={classes.rootCard}>
           <CardContent>
@@ -99,7 +106,7 @@ const LoginModal = ({ isOpen, toggleOpenLogin }) => {
               <Typography variant="h3">MilanTV</Typography>
             </div>
             <Divider />
-            {displaySignUp ? <SignUpForm toggleOpenLogin={toggleOpenLogin} /> : <LoginForm toggleOpenLogin={toggleOpenLogin}/>}
+            {displaySignUp ? <SignUpForm /> : <LoginForm />}
             <div className={classes.cardInfo}>
               {displaySignUp ?
                 <Typography>Already have an account ?, <span className={`${classes.signLink} ${classes.signInColor}`} onClick={() => setdisplaySignUp(false)}>Sign In</span></Typography> :

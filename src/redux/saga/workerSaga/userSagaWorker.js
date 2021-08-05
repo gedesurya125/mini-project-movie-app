@@ -1,7 +1,8 @@
 import { put } from "@redux-saga/core/effects";
 import * as type from '../../actions/actionTypes'
+import { closeModalLogInAction } from "../../actions/modalAction";
 import { logOutUser, setLoadingUserAction, setUserAction, unsetLoadingUserAction } from "../../actions/userAction";
-import { getCurrentUser, registerUser } from "../../Api/userAPI";
+import { getCurrentUser, registerUser, signInUserAPI } from "../../Api/userAPI";
 
 
 export function* registerUserAsycn(action) {
@@ -18,6 +19,7 @@ export function* registerUserAsycn(action) {
     localStorage.setItem('token', `Bearer ${response.data.data.token}`);
     yield put({ type: type.SET_USER, payload: response.data.data });
     yield put(unsetLoadingUserAction());
+    yield put(closeModalLogInAction());
   } catch (err) {
     console.log(err)
   }
@@ -29,7 +31,6 @@ export function* getCurrentUserAsycn(action) {
     const token = localStorage.getItem('token')
     // console.log(token);
     const response = yield getCurrentUser(token);
-    // console.log(response);
     if (response.data.data) {
       yield put(setUserAction(response.data.data))
     } else {
@@ -37,6 +38,31 @@ export function* getCurrentUserAsycn(action) {
     }
     yield put(unsetLoadingUserAction());
   } catch (err) {
-    console.log(err)
+    // console.log('USER NOT LOGGED IN, DETAILS: ',err)
+    yield put(unsetLoadingUserAction());
+  }
+  yield put(unsetLoadingUserAction());
+}
+
+export function* signInUserAsync(action) {
+  try {
+    yield put(setLoadingUserAction());
+    const params = new URLSearchParams();
+    const { email, password } = action.payload;
+    params.append("email", email);
+    params.append("password", password);
+    const response = yield signInUserAPI(params);
+    if (response.data.data) {
+      localStorage.setItem('token', `Bearer ${response.data.data.token}`);
+      yield put({ type: type.SET_USER, payload: response.data.data });
+      yield put(unsetLoadingUserAction());
+      yield put(closeModalLogInAction());
+    } else {
+      console.log("THIS IS THE RESPONSE:", response);
+      yield put(unsetLoadingUserAction());
+      yield put(closeModalLogInAction());
+    }
+  } catch (err) {
+    console.log(err);
   }
 }

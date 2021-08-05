@@ -19,3 +19,4 @@ export const setUserAction = (payload) => ({type: type.SET_USER, payload})
 export const getLogedInUser = () => ({type: type.GET_USER});
 export const setLoadingUserAction = () => ({type: type.SET_LOADING_USER});
 export const unsetLoadingUserAction = () => ({type: type.UNSET_LOADING_USER});
+export const signInUserAction = (payload) => ({type: type.SIGN_IN_USER, payload}) //payload berisi {email, password};

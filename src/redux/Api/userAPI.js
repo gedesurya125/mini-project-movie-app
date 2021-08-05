@@ -6,3 +6,5 @@ export const getCurrentUser = (token) => movieAPI.get('/auth/getcurrentuser', {
     "Authorization": token
   }
 })
+
+export const signInUserAPI = (formData) => movieAPI.post("/auth/signin", formData); // form data is data {email, password} formated in x-www-form-urlencoded

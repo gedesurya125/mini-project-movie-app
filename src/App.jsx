@@ -14,7 +14,7 @@ import { getLogedInUser } from './redux/actions/userAction';
 const App = () => {
   const dispatch = useDispatch()
   const {loading} = useSelector(state => state.movies);
-  console.log(loading);
+  // console.log(loading);
   useEffect(() => {
     dispatch(getMoviesAction({ page: 1, size: 10 }))
     dispatch(getLogedInUser());
