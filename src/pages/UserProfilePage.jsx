@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import EditUserModal from '../components/EditUserModal'
 import { useHistory } from 'react-router-dom'
 import {
@@ -12,6 +12,7 @@ import {
   makeStyles,
   Typography
 } from '@material-ui/core'
+import { openModalUpdateUser } from '../redux/actions/modalAction'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,12 +48,15 @@ const useStyles = makeStyles(theme => ({
 
 const UserProfilePage = () => {
   const history = useHistory();
-  const [openModal, setOpenModal] = useState(false)
+  // const [openModal, setOpenModal] = useState(false)
   const user = useSelector(state => state.user.data);
+  const dispatch = useDispatch();
+  // const {modalUpdateUser} = useSelector(state => state.modals);
+  // console.log('ini status untuk modal upate user',modalUpdateUser);
   const classes = useStyles()
 
-  const toggleModalOpen = () => {
-    setOpenModal(state => !state)
+  const openModal = () => {
+    dispatch(openModalUpdateUser());
   }
   return (
     <div>
@@ -66,7 +70,7 @@ const UserProfilePage = () => {
               <Typography>{user.email}</Typography>
               <Typography>id : {user.id}</Typography>
               <div className={classes.actionButton}>
-                <Button onClick={toggleModalOpen} variant="contained" color="primary">Edit Data</Button>
+                <Button onClick={openModal} variant="contained" color="primary">Edit Data</Button>
                 <Button
                   onClick={() => history.push('/')}
                   variant="contained"
@@ -76,7 +80,9 @@ const UserProfilePage = () => {
           </Card>
         </Box>
 
-        <EditUserModal openModal={openModal} toggleModalOpen={toggleModalOpen} />
+        {/* <EditUserModal openModal={openModal} toggleModalOpen={toggleModalOpen} /> */}
+        <EditUserModal/>
+
       </Container>
     </div>
   )

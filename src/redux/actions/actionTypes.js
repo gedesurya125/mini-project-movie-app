@@ -17,6 +17,8 @@ export const UNSET_LOADING_USER = "UNSET_LOADING_USER";
 export const SIGN_IN_USER = "SIGN_IN_USER"; // used in saga
 
 
-// Loading Reducer ====================
+// modal Reducer ====================
 export const SET_MODAL_LOGIN_OPEN = "SET_MODAL_LOGIN_OPEN";
 export const SET_MODAL_LOGIN_CLOSE = "SET_MODAL_LOGIN_CLOSE";
+export const OPEN_MODAL_UPDATE_USER = "OPEN_MODAL_UPDATE_USER";
+export const CLOSE_MODAL_UPDATE_USER = "CLOSE_MODAL_UPDATE_USER";

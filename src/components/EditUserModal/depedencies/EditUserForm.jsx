@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { TextField, makeStyles, Button, IconButton } from '@material-ui/core';
+import { 
+  TextField, 
+  makeStyles, 
+  Button, 
+  IconButton,
+  CircularProgress 
+} from '@material-ui/core';
 import FileInput from '../../commons/FileInput';
 import { useFormik } from 'formik';
 import { userFormik } from '../../../tools/yupFormValidator';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUserAction } from '../../../redux/actions/userAction';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,20 +27,28 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 const EditUserForm = () => {
+
   const [passVisible, setPassVisible] = useState(false);
-  const user = useSelector(state => state.data);
+  const {_id, username, fullname, email, password} = useSelector(state => state.user.data);
+  const {loading} = useSelector(state => state.user)
+
+  const dispatch = useDispatch(); 
+  // console.log('isi dari user di edit form', _id);
+  
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      user_name: user.username, //last edited
-      full_name: user.fullname,
-      email: user.email,
-      password: user.password,
-      image: user.image,
+      user_name: username || '', //last edited
+      full_name: fullname || '',
+      email: email || '',
+      password: password || '',
+      image: '',
     },
     validationSchema: userFormik.validationSchema,
     onSubmit: (values) => {
-      console.log(values)
-      alert(JSON.stringify(values))
+      // console.log(values)
+      // alert(JSON.stringify(values))
+      dispatch(updateUserAction(_id, values));
     }
   })
 
@@ -41,8 +56,7 @@ const EditUserForm = () => {
   const classes = useStyles();
   // const [image2, setImage2] = useState('');
 
-  console.log('ini isi image2 :', formik.values.image);
-
+  // console.log('ini isi initialValue :', formik.initialValues);
 
   return (
     <>
@@ -51,6 +65,7 @@ const EditUserForm = () => {
           <TextField
             fullWidth
             id="user_name"
+            defaultValue={username}
             name="user_name"
             label="User Name"
             onChange={formik.handleChange}
@@ -64,6 +79,7 @@ const EditUserForm = () => {
         <div className={classes.inputForm}>
           <TextField
             id="full_name"
+            defaultValue={fullname}
             name="full_name"
             label="Full Name"
             onChange={formik.handleChange}
@@ -78,6 +94,7 @@ const EditUserForm = () => {
         <div className={classes.inputForm}>
           <TextField
             id="email"
+            defaultValue={email}
             name="email"
             label="Email"
             onChange={formik.handleChange}
@@ -92,6 +109,7 @@ const EditUserForm = () => {
         <div className={classes.inputForm}>
           <TextField
             id="password"
+            defaultValue={password}
             name="password"
             label="Password"
             type={passVisible ? 'text' : 'password'}
@@ -117,6 +135,7 @@ const EditUserForm = () => {
 
         <Button
           fullWidth
+          startIcon={loading ? <CircularProgress thickness={6} size={20} color="primary"/> : null}
           className={classes.inputForm}
           type="submit"
           variant="contained"

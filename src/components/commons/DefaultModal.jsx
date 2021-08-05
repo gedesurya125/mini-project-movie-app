@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const DefaultModal = ({ openModal, toggleModalOpen, children }) => {
+const DefaultModal = ({ openModal, onCloseAction, children }) => {
   const classes = useStyles();
 
 
@@ -31,7 +31,7 @@ const DefaultModal = ({ openModal, toggleModalOpen, children }) => {
         aria-describedby="transition-modal-description"
         className={classes.modal}
         open={openModal}
-        onClose={toggleModalOpen}
+        onClose={onCloseAction}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{

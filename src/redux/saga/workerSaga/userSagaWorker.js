@@ -1,8 +1,9 @@
 import { put } from "@redux-saga/core/effects";
 import * as type from '../../actions/actionTypes'
-import { closeModalLogInAction } from "../../actions/modalAction";
+import { closeModalLogInAction, closeModalUpdateUser } from "../../actions/modalAction";
 import { logOutUser, setLoadingUserAction, setUserAction, unsetLoadingUserAction } from "../../actions/userAction";
-import { getCurrentUser, registerUser, signInUserAPI } from "../../Api/userAPI";
+import { getCurrentUser, registerUser, signInUserAPI, updateUserAPI } from "../../Api/userAPI";
+import FormData from "form-data";
 
 
 export function* registerUserAsycn(action) {
@@ -64,5 +65,34 @@ export function* signInUserAsync(action) {
     }
   } catch (err) {
     console.log(err);
+  }
+}
+
+export function* updateUserAsycn(action){
+  try{
+    const {id, data} = action.payload;
+    yield put(setLoadingUserAction());
+    let dataToSend = new FormData();
+    dataToSend.append('fullname', data.full_name);
+    dataToSend.append('username', data.user_name);
+    dataToSend.append('email', data.email);
+    dataToSend.append('password', data.password);
+    dataToSend.append('image', data.image, data.image.name);
+    const token = localStorage.getItem('token')
+
+    const response = yield updateUserAPI(id, dataToSend, dataToSend._boundary, token);
+
+    if(response.data.data){
+      console.log('UPDATE SUCCESS');
+      yield put({ type: type.SET_USER, payload: response.data.data });
+      yield put(unsetLoadingUserAction());
+      yield put(closeModalUpdateUser());
+    }else{
+      console.log("THIS IS THE RESPONSE:", response);
+      yield put(unsetLoadingUserAction());
+      yield put(closeModalUpdateUser());
+    }
+  }catch(err){
+    console.log('Error saat Update User di saga worker', err);
   }
 }

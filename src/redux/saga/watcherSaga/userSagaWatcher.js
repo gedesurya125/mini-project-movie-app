@@ -2,7 +2,8 @@ import { takeLatest } from "@redux-saga/core/effects";
 import { 
   getCurrentUserAsycn, 
   registerUserAsycn, 
-  signInUserAsync 
+  signInUserAsync, 
+  updateUserAsycn
 } from "../workerSaga/userSagaWorker";
 import * as type from '../../actions/actionTypes'
 
@@ -17,4 +18,8 @@ export function* getCurrentUserWatcher() {
 
 export function* signInUserWatcher(){
   yield takeLatest(type.SIGN_IN_USER, signInUserAsync);
+}
+
+export function* updateUserWatcher(){
+  yield takeLatest(type.UPDATE_USER, updateUserAsycn);
 }
