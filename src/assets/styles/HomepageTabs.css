@@ -1,0 +1,14 @@
+.MuiTabs-flexContainer {
+    justify-content: center;
+    box-shadow: none;
+}
+
+.PrivateTabIndicator-colorSecondary-36 {
+    background-color: none;
+  }
+
+@media (max-width: 960px) {
+    .MuiTabs-flexContainer {
+        flex-wrap: wrap;
+    }
+}

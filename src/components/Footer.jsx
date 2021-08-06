@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import "@fontsource/roboto";
-import "../assets/style/Footer.css";
+import "../assets/styles/Footer.css";
 import footerLogo from "../assets/images/footerLogo.png";
 import gPlayLogo from "../assets/images/gplayLogo.png";
 import appStoreLogo from "../assets/images/appStoreLogo.png";

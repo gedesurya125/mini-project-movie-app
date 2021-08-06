@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, makeStyles, TextField, Typography, Grid } from '@material-ui/core'
+import { Avatar, makeStyles, TextField, Typography, Grid, Button } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 
 const useStyles = makeStyles(theme => ({
@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
   },
   inputForm: {
     marginBottom: theme.spacing(1)
+  },
+  reviewButton:{
+    margin: theme.spacing(1, 0)
   }
 
 }))
@@ -62,6 +65,7 @@ const ReviewForm = () => {
           </div>
           <div className={classes.inputForm}>
             <TextField multiline minRows={5} size="small" fullWidth label="Leave a Review" name="comment" value={state.comment} onChange={handleReviewChange} variant="outlined" color="primary" />
+            <Button className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
           </div>
         </Grid>
 

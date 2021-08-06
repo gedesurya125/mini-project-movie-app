@@ -87,7 +87,7 @@ const LoginModal = () => {
   const closeModalLogIn = () => {
     dispatch(closeModalLogInAction());
   }
-  console.log(modalLogIn);
+  // console.log(modalLogIn);
   // RETURN =======================================
   return (
     <Modal

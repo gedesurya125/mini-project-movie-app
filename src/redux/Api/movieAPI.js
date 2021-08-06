@@ -6,4 +6,11 @@
 import { movieAPI } from "./setupAPI";
 
 // this will be used in saga
-export const getMovies = (params) => movieAPI.get(`/api/v1/movie`,{params}); 
+export const getMovies = (params) => movieAPI.get(`/api/v1/movie`,{params}); // params is an object{params:{param1: value1, param2, value2}} // this can be general comman for get movie
+export const getMoviesTopRating = (page) => getMovies({page, size: 10, sort: 'des'}); // get top 10 highest rating movies
+export const getMovieDetails = (movieId) => movieAPI.get(`/api/v1/movie/${movieId}`); // get movie details by its ID
+export const getMovieCategory = () => movieAPI.get('/api/v1/category/');
+export const getMovieActors = (movieId) => movieAPI.get(`/api/v1/movie/${movieId}/actors`); // get actors by movie ID
+// export const getMovieByCategory = (page, category) => getMovies({page, size: 10, category, sort:'des'}); //get movie by category
+// /api/v1/movie?page=1&size=10&category=Lol&sort=des
+ 

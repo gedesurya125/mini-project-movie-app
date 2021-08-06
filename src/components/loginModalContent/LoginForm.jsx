@@ -118,7 +118,7 @@ const LoginForm = () => {
           />
         </div>
         <div className={classes.cardActions}>
-          <Button startIcon={loading ? <CircularProgress thickness={6} size={20} color="primary"/> : null} type="submit" variant="contained" color="primary" fullWidth>Login</Button> :
+          <Button startIcon={loading ? <CircularProgress thickness={6} size={20} color="secondary"/> : null} type="submit" variant="contained" color="primary" fullWidth>Login</Button> :
         </div>
     </form>
 

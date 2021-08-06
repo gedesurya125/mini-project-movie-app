@@ -1,62 +1,7 @@
 import React from 'react'
 import ActorsPhotoCard from '../commons/ActorsPhotoCard'
 import { makeStyles, Typography } from '@material-ui/core'
-
-
-// MOCK DATA ACTORS =============================================
-// Setelah ada API data MOCK ini di hapus
-// kemudian Langsung tembak data di store  dengan useSelector
-const MovieActors = [
-  {
-    "id": "1",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "2",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "3",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "4",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "5",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "6",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "7",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "8",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-  {
-    "id": "9",
-    "name": "richardo kaka",
-    "photo": "https://image.tmdb.org/t/p/w500/34BmdJkdvRweC3xJJFlOFQ2IbYc.jpg"
-  },
-
-]
-
-
-
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,12 +13,15 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+
+
 //===============================================================
 const ActorsPanel = () => {
   const classes = useStyles();
-
-  const renderActors = MovieActors.map((actor) => (
-    <ActorsPhotoCard key={actor.id} actor={actor} />
+  const actorsList = useSelector(state => state.movieActors.data.data.actors);
+  console.log('DATA ACTORNYA SEPERTI INI', actorsList);
+  const renderActors = actorsList.map((actor) => (
+    <ActorsPhotoCard key={actor._id} actor={actor} />
   ))
   return (
     <div>

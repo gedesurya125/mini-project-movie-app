@@ -135,7 +135,7 @@ const EditUserForm = () => {
 
         <Button
           fullWidth
-          startIcon={loading ? <CircularProgress thickness={6} size={20} color="primary"/> : null}
+          startIcon={loading ? <CircularProgress thickness={6} size={20} color="secondary"/> : null}
           className={classes.inputForm}
           type="submit"
           variant="contained"

@@ -1,5 +1,6 @@
 import { Typography, makeStyles } from '@material-ui/core'
 import React from 'react';
+import { formatDate } from '../../tools/dateReformat';
 import DetailTitle from '../commons/DetailTitle';
 import MovieInfoList from '../commons/MovieInfoList';
 
@@ -23,26 +24,41 @@ const useStyles = makeStyles(theme => ({
       }
     },
   },
-  paddingTop6:{
+  paddingTop6: {
     paddingTop: theme.spacing(8),
   },
   trailer: {
-    margin: theme.spacing(2,0),
+    margin: theme.spacing(2, 0),
     display: 'flex',
     justifyContent: 'center'
   }
 }));
 
-// Setelah Ada API parameter props.movieDetails dihapus
-// Tembak langsung data movieDetails yang ada di store dengan use Selector
+
+
+
 const OverViewPanel = ({ movieDetails }) => {
   const classes = useStyles();
-  const movie_info = Object.keys(movieDetails.movie_info);
+  const requiredList = [
+    "releaseDate",
+    "director",
+    "song",
+    "budget"
+  ];
 
-
-  const renderMovieInfo = movie_info.map((info, index) => (
-    <MovieInfoList infoKey={info} infoDetails={movieDetails.movie_info} key={index} allKeys={movie_info} />
-  ))
+  const renderMovieInfo = requiredList.map((info, index) => {
+    if (info === "releaseDate") {
+      const formatedDate = formatDate(new Date(movieDetails.movieInfo[info]));
+      const newFormatedArray = { ...movieDetails.movieInfo, releaseDate: formatedDate };
+      return (
+        <MovieInfoList infoKey={info} infoDetails={newFormatedArray} key={index} allKeys={requiredList} />
+      )
+    } else {
+      return (
+        <MovieInfoList infoKey={info} infoDetails={movieDetails.movieInfo} key={index} allKeys={requiredList} />
+      )
+    }
+  })
   return (
     <>
       <DetailTitle>Synopsis</DetailTitle>
@@ -55,7 +71,7 @@ const OverViewPanel = ({ movieDetails }) => {
 
       <div className={classes.paddingTop6} id="trailer-movie">
         <DetailTitle>Trailer</DetailTitle>
-        <div  className={classes.trailer}>
+        <div className={classes.trailer}>
           <iframe style={{ width: '80vw', height: '45.2vw' }} title="trailer"
             src={`https://www.youtube.com/embed/${movieDetails.trailer}`}>
           </iframe>
