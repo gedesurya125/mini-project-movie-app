@@ -5,6 +5,7 @@ import store from './redux/store';
 import { Provider } from 'react-redux';
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import './index.css';
 const rootTheme = createTheme({
   palette:{
     primary:{

@@ -204,7 +204,7 @@ export default function HomepageMovieListALL() {
     <Grid container>
       <div className={classes.card__container}>
         {moviesALL.map((item, id) => (
-          <Grid Item xs={12} sm={4} md={3} lg={3}>
+          <Grid key={id} item xs={12} sm={4} md={3} lg={3}>
             <div className={classes.card__item}>
               <div key={id}>
                 <Item thumbnail={item.thumbnail} title={item.title} />
