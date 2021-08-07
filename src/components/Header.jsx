@@ -17,19 +17,23 @@ import LoginModal from './LoginModal';
 import UserMenu from './UserMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalLogInAction } from '../redux/actions/modalAction';
+import {useHistory} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
     background: 'white'
   },
   logo: {
-    display: 'flex'
+    display: 'flex',
+    '&:hover':{
+      cursor: 'pointer'
+    }
   },
   logoText: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: "block",
-      margin: theme.spacing(0, 1)
+      marginLeft: theme.spacing(1)
     }
   },
   toolbar: {
@@ -41,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   },
   search: {
     // width: '70%'
+    marginLeft: theme.spacing(1),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: '80%'
@@ -56,7 +61,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   login: {
-    marginLeft: theme.spacing(1.5)
+    marginLeft: theme.spacing(1)
     // display: 'none',
     // [theme.breakpoints.up('sm')]:{
     //   display: 'block'
@@ -65,6 +70,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = () => {
+  const history =  useHistory()
   const dispatch = useDispatch();
   const [userMenu, setUserMenu] = useState({ // state for user menu list
     open: false,
@@ -105,11 +111,14 @@ const Header = () => {
     }))
   }
 
+  const redirectToHome = () => {
+    history.push('/');
+  }
   return (
     <AppBar position="sticky" className={classes.root}>
       <Container>
         <Toolbar variant="dense" disableGutters className={classes.toolbar}>
-          <div className={classes.logo}>
+          <div onClick={redirectToHome} className={classes.logo}>
             <img src={headerlogo} alt="" width="50em" />
             <Typography className={classes.logoText} component="span" color="textPrimary" variant="h4">MilanTV</Typography>
           </div>

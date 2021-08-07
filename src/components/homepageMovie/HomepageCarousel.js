@@ -1,11 +1,14 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
+  root:{
+    position: 'relative'
+  },
   carouselContainer: {
     // marginTop: theme.spacing(2)
-    // height: '90vh'
+    maxHeight: '92vh',
   },
   paperRoot: {
     // display: 'flex',
@@ -14,14 +17,23 @@ const useStyles = makeStyles(theme => ({
   },
   imageContainer: {
     // flexShrink: '1',
+    position: 'relative',
     '& img': {
-      width: '100%'
+      width: '100%',
     }
   },
   indicatorContainer: {
     position: 'absolute',
     zIndex: '10',
     bottom: '20px'
+  },
+  carouselText: {
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    height: '100%',
+    width: '100vw',
+    
   }
 }))
 
@@ -46,7 +58,7 @@ function ItemCarousel({ movie }) {
 }
 
 // MAIN COMPONENT HOMEPAGE CAROUSEL
-export default function HomepageCarousel({topMovies}) {
+export default function HomepageCarousel({ topMovies }) {
   const classes = useStyles()
   // const topMovies = useSelector(state => state.topMovies.data.data);
   // console.log('TOP MOVIES FROM IMAGE CAROUSEL', topMovies);
@@ -56,14 +68,15 @@ export default function HomepageCarousel({topMovies}) {
   ))
 
   return (
-    <Carousel
-      className={classes.carouselContainer} 
-      animation="slide"
-      indicatorContainerProps={{ className: classes.indicatorContainer }}
-      indicatorIconButtonProps={{ className: classes.indicator }}
-    >
-      {renderitemCarousel}
-
-    </Carousel>
+    <div className={classes.root}>
+      <Carousel
+        className={classes.carouselContainer}
+        animation="slide"
+        indicatorContainerProps={{ className: classes.indicatorContainer }}
+        indicatorIconButtonProps={{ className: classes.indicator }}
+      >
+        {renderitemCarousel}
+      </Carousel >
+    </div>
   )
 }
