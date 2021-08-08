@@ -4,7 +4,11 @@ import {
   getMoviesWatcher,
   getMoviesTopRatingWatcher,
   getMovieCategoryWatcher,
-  getMovieActorsWatcher
+  getMovieActorsWatcher,
+  getMovieReviewWatcher,
+  getAndAddMovieReviewWathcer,
+  sendMovieReviewWatcher,
+  getSearchedMovieWatcher
 } from "./watcherSaga/moviesSagaWatcher";
 import { 
   getCurrentUserWatcher, 
@@ -23,6 +27,10 @@ export default function* rootSaga(){
     getMovieDetailsWatcher(),
     getMoviesTopRatingWatcher(),
     getMovieCategoryWatcher(),
-    getMovieActorsWatcher()
+    getMovieActorsWatcher(),
+    getMovieReviewWatcher(),
+    getAndAddMovieReviewWathcer(),
+    sendMovieReviewWatcher(),
+    getSearchedMovieWatcher()
   ])
 }

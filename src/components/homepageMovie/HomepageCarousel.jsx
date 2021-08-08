@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { makeStyles} from '@material-ui/core'
+import { sourceUrl } from '../../redux/Api/setupAPI';
 
 const useStyles = makeStyles(theme => ({
   root:{
@@ -50,7 +51,7 @@ function ItemCarousel({ movie }) {
         </div>
       ))} */}
       <div className={classes.imageContainer}>
-        <img src={movie.poster} alt="..." />
+        <img src={sourceUrl+movie.poster} alt="..." />
       </div>
 
     </div>

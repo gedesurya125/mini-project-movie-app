@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DetailsTab({movieDetails}) {
+export default function DetailsTab({movieDetails, movie_id}) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const theme = useTheme();
@@ -111,7 +111,7 @@ export default function DetailsTab({movieDetails}) {
           <ActorsPanel/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <ReviewsPanel/>
+          <ReviewsPanel movie_id={movie_id}/>
         </TabPanel>
       </SwipeableViews>
     </div>

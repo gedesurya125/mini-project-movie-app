@@ -1,13 +1,23 @@
 import React, { useState } from 'react'
-import { Avatar, makeStyles, TextField, Typography, Grid, Button } from '@material-ui/core'
-import { Rating } from '@material-ui/lab'
+import {
+  Avatar
+  , makeStyles
+  , TextField
+  , Typography
+  , Grid
+  , Button
+  , Paper
+} from '@material-ui/core'
+import { Rating } from '@material-ui/lab';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMovieReviewAction } from '../../redux/actions/moviesAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
 
   },
-  avatarResponsive:{
-    [theme.breakpoints.up('md')]:{
+  avatarResponsive: {
+    [theme.breakpoints.up('md')]: {
       height: theme.spacing(8),
       width: theme.spacing(8)
     }
@@ -15,16 +25,41 @@ const useStyles = makeStyles(theme => ({
   inputForm: {
     marginBottom: theme.spacing(1)
   },
-  reviewButton:{
+  reviewButton: {
     margin: theme.spacing(1, 0)
+  },
+
+  informationBoard:{
+    padding: theme.spacing(2),
+    // background: theme.palette.primary.light,
+    '& .MuiTypography-root':{
+      color: theme.palette.common.white,
+      weight: theme.typography.fontWeightBold,
+    }
+  },
+  notLogedIn:{
+    // padding: theme.spacing(2),
+    background: theme.palette.primary.light,
+    // '& .MuiTypography-root':{
+    //   color: theme.palette.common.white,
+    //   weight: theme.typography.fontWeightBold,
+    // }
+  },
+
+  reviewed:{
+    background: theme.palette.success.main
   }
+
 
 }))
 
-const ReviewForm = () => {
+const ReviewForm = ({ id_movie, isReviewed }) => {
+  const user = useSelector(state => state.user.data)
+  const dispatch = useDispatch();
+  // console.log(user._id);
   const [state, setState] = useState({
-    movie_id: '',
-    user_id: '',
+    id_user: user._id,
+    id_movie: id_movie,
     headLine: '',
     comment: '',
     rating: 0,
@@ -37,19 +72,42 @@ const ReviewForm = () => {
     }))
   }
   const classes = useStyles();
+
+  const handleSendReview = () => {
+    const dataToSend = {
+      ...state,
+      id_user: user._id
+    }
+    console.log(dataToSend);
+    dispatch(sendMovieReviewAction(dataToSend));
+    
+  }
+
+  if(isReviewed) return(
+    <Paper elevation={2} className={`${classes.informationBoard} ${classes.reviewed}`}>
+      <Typography variant="body1" align="center"> You had reviewed this movie</Typography>
+    </Paper>
+  );
+
+  if (!user._id) return (
+    <Paper elevation={2} className={`${classes.informationBoard} ${classes.notLogedIn}`}>
+      <Typography variant="body1" align="center"> PLEASE LOGIN FIRST TO CREATE A REVIEW </Typography>
+    </Paper>
+  );
+
   return (
     <form>
       <Grid container className={classes.root}>
         <Grid item xs={2} sm={1}>
-          <Avatar className={classes.avatarResponsive}>M</Avatar>
+          <Avatar className={classes.avatarResponsive} src={user.image} alt={user.username[0].toUpperCase()} />
         </Grid>
         <Grid item xs={10} sm={11} >
-          <Typography>User Name</Typography>
+          <Typography>{user.fullname}</Typography>
           <Rating
             name="simple-controlled"
             value={state.rating}
             size="small"
-            max = {10}
+            max={10}
             onChange={(event, newValue) => {
               setState(state => ({
                 ...state,
@@ -65,7 +123,7 @@ const ReviewForm = () => {
           </div>
           <div className={classes.inputForm}>
             <TextField multiline minRows={5} size="small" fullWidth label="Leave a Review" name="comment" value={state.comment} onChange={handleReviewChange} variant="outlined" color="primary" />
-            <Button className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
+            <Button onClick={handleSendReview} className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
           </div>
         </Grid>
 

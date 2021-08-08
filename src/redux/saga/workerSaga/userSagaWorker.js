@@ -77,7 +77,12 @@ export function* updateUserAsycn(action){
     dataToSend.append('username', data.user_name);
     dataToSend.append('email', data.email);
     dataToSend.append('password', data.password);
-    dataToSend.append('image', data.image, data.image.name);
+
+    dataToSend.append('image', data.image
+    // , data.image.name
+    );
+    console.log('DATA GAMBAR DARI SAGA WORKER UPDATE USER ASYNC', data.image)
+
     const token = localStorage.getItem('token')
 
     const response = yield updateUserAPI(id, dataToSend, dataToSend._boundary, token);

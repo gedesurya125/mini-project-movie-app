@@ -7,6 +7,7 @@ import topRatingMovieReducer from "./reducers/topRatingMovieReducer";
 import movieCategoryReducer from "./reducers/movieCategoryReducer";
 import selectedCategoryReducer from "./reducers/selectedCategoryReducer";
 import movieActorsReducer from "./reducers/movieActorsReducer";
+import movieReviewReducer from "./reducers/movieReviewReducer";
 
 const rootReducer = combineReducers({
   movies: moviesReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   modals: modalReducer,
   selectedCategory: selectedCategoryReducer,
-  movieActors: movieActorsReducer
+  movieActors: movieActorsReducer,
+  movieReviews: movieReviewReducer
 })
 
 export default rootReducer;

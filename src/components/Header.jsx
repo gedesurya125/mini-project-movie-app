@@ -6,18 +6,18 @@ import {
   Toolbar,
   TextField,
   makeStyles,
-  InputAdornment,
   Button,
   Typography,
   Avatar,
   IconButton
 } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import LoginModal from './LoginModal';
 import UserMenu from './UserMenu';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModalLogInAction } from '../redux/actions/modalAction';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { Autocomplete } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     display: 'flex',
-    '&:hover':{
+    '&:hover': {
       cursor: 'pointer'
     }
   },
@@ -67,33 +67,65 @@ const useStyles = makeStyles(theme => ({
     //   display: 'block'
     // },
   },
+  iconAvatar:{
+    padding: 0,
+  }
 }))
 
+
+
+// SEARCH BAR DEPEDECIES - MOCK OPTIONS VALUE=====================
+const options = [
+  '',
+  'the avenger',
+  'seven eleven',
+  'wining eleven',
+  'pro evolution soccer',
+  'DOTA - Defense Of The Ancient',
+  'Mobile Legends',
+  'PUBG',
+  'Need For Speed Most Wanted',
+  'Nedd For Speed Under Ground',
+  'Need For Speed Carbon',
+  'Need For Speed Hot Persuits',
+  'Final Fantasy IV',
+  'Bloddy Roar III'
+]
+//==============================================================
+
+
 const Header = () => {
-  const history =  useHistory()
+  const history = useHistory()
   const dispatch = useDispatch();
   const [userMenu, setUserMenu] = useState({ // state for user menu list
     open: false,
     anchorEl: null
   })
   const user = useSelector(state => state.user) // get User Status
-  const [search, setSearch] = useState({
-    value: '',
-    element: null
+  // const [search, setSearch] = useState({
+  //   value: '',
+  //   element: null
+  // })
+
+  // AUTO COMPLETE REQUIREMENT
+  const [autoSearch, setAutoSearch] = useState({
+    value: options[0],
+    inputValue: ''
   })
+  //=========================
   const classes = useStyles();
 
   const openMoalLogIn = () => {
     dispatch(openModalLogInAction());
   }
 
-  const handleSearch = (e) => {
-    setSearch(state => ({
-      ...state,
-      value: e.target.value,
-      element: e.currentTarget
-    }))
-  }
+  // const handleSearch = (e) => {
+  //   setSearch(state => ({
+  //     ...state,
+  //     value: e.target.value,
+  //     element: e.currentTarget
+  //   }))
+  // }
 
   const handleUserMenuOpen = (e) => {
     setUserMenu(state => ({
@@ -114,6 +146,8 @@ const Header = () => {
   const redirectToHome = () => {
     history.push('/');
   }
+
+
   return (
     <AppBar position="sticky" className={classes.root}>
       <Container>
@@ -123,27 +157,32 @@ const Header = () => {
             <Typography className={classes.logoText} component="span" color="textPrimary" variant="h4">MilanTV</Typography>
           </div>
           <div className={classes.search}>
-            <TextField
-              value={search.value}
-              onChange={handleSearch}
-              placeholder="search movie ..."
-              variant="outlined"
-              size="small"
-              color="secondary"
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                )
-              }}
+
+            <Autocomplete
+              freeSolo
+              value={autoSearch.value}
+              onChange={(event, newValue) => { setAutoSearch(state => ({ ...state, value: newValue })) }}
+              inputValue={autoSearch.inputValue}
+              onInputChange={(event, newInputValue) => { setAutoSearch(state => ({ ...state, inputValue: newInputValue })) }}
+              id="search-bar"
+              options={options}
+              renderInput={
+                (params) => 
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    size="small"
+                    color="secondary"
+                    fullWidth
+                    placeholder="Search movie ..."
+                  />
+              }
             />
           </div>
           <div className={classes.login}>
             {
               user?.logged_in ? //if Logged In
-                <IconButton onClick={handleUserMenuOpen}>
+                <IconButton className={classes.iconAvatar} onClick={handleUserMenuOpen}>
                   <Avatar
                     alt=""
                     src={user?.data?.image}
@@ -157,7 +196,7 @@ const Header = () => {
           </div>
         </Toolbar>
       </Container>
-      <LoginModal/>
+      <LoginModal />
       <UserMenu open={userMenu.open} anchorEl={userMenu.anchorEl} onClose={handleUserMenuClose} />
 
 
