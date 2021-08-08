@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import headerlogo from '../assets/img/headerlogo.png'
 import {
   AppBar,
@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openModalLogInAction } from '../redux/actions/modalAction';
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab';
+import { getSearchedMovieAction } from '../redux/actions/moviesAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -75,26 +76,34 @@ const useStyles = makeStyles(theme => ({
 
 
 // SEARCH BAR DEPEDECIES - MOCK OPTIONS VALUE=====================
-const options = [
-  '',
-  'the avenger',
-  'seven eleven',
-  'wining eleven',
-  'pro evolution soccer',
-  'DOTA - Defense Of The Ancient',
-  'Mobile Legends',
-  'PUBG',
-  'Need For Speed Most Wanted',
-  'Nedd For Speed Under Ground',
-  'Need For Speed Carbon',
-  'Need For Speed Hot Persuits',
-  'Final Fantasy IV',
-  'Bloddy Roar III'
-]
+// const options = [
+//   '',
+//   'the avenger',
+//   'seven eleven',
+//   'wining eleven',
+//   'pro evolution soccer',
+//   'DOTA - Defense Of The Ancient',
+//   'Mobile Legends',
+//   'PUBG',
+//   'Need For Speed Most Wanted',
+//   'Nedd For Speed Under Ground',
+//   'Need For Speed Carbon',
+//   'Need For Speed Hot Persuits',
+//   'Final Fantasy IV',
+//   'Bloddy Roar III'
+// ]
 //==============================================================
 
 
 const Header = () => {
+
+
+  const searchedMovie = useSelector(state => state.searchedMovie);
+
+  let options = [
+    '',
+    ...searchedMovie.data.map(movie => movie.title)
+  ]
   const history = useHistory()
   const dispatch = useDispatch();
   const [userMenu, setUserMenu] = useState({ // state for user menu list
@@ -147,7 +156,28 @@ const Header = () => {
     history.push('/');
   }
 
+  const handleSelectedSearchValue = (event, value) =>{
+    const selected = searchedMovie.data.find(movie => movie.title === value);
+    // console.log('INI MOVIE YANG DICARI BRO: ', selected);
+    if(selected) return history.push(`/details/${selected._id}`);
+    setAutoSearch(state => ({
+      ...state,
+      value: value
+    }))
+  }
 
+  const handleSearchInputChange =(event, value) =>{
+    setAutoSearch(state => ({
+      ...state,
+      inputValue: value
+    }))
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getSearchedMovieAction({title:autoSearch.inputValue, size:15}))
+    }, 800)
+  }, [dispatch, autoSearch.inputValue])
   return (
     <AppBar position="sticky" className={classes.root}>
       <Container>
@@ -161,9 +191,9 @@ const Header = () => {
             <Autocomplete
               freeSolo
               value={autoSearch.value}
-              onChange={(event, newValue) => { setAutoSearch(state => ({ ...state, value: newValue })) }}
+              onChange={handleSelectedSearchValue}
               inputValue={autoSearch.inputValue}
-              onInputChange={(event, newInputValue) => { setAutoSearch(state => ({ ...state, inputValue: newInputValue })) }}
+              onInputChange={handleSearchInputChange}
               id="search-bar"
               options={options}
               renderInput={

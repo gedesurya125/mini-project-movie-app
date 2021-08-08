@@ -16,7 +16,7 @@ const searchListReducer = (state = initialState, action) => {
       ...state, 
       loading: true
     };
-    case type.UNSET_LOADING_SEARCHER_MOVIE: return {
+    case type.UNSET_LOADING_SEARCHED_MOVIE: return {
       ...state,
       loading: false
     }

@@ -50,7 +50,7 @@ const MovieCard = ({ movie }) => {
     history.push(`/details/${movie._id}`);
   }
   return (
-    <Card className={classes.movieCard} elevation={6}>
+    <Card className={classes.movieCard} elevation={15}>
       <CardActionArea onClick={onCardClick}>
         <CardMedia
           component="img"

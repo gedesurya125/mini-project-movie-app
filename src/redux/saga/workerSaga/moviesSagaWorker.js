@@ -206,6 +206,7 @@ export function* getSearchedMovieWorker(action){
     }
   }catch(err){
     console.log('ERROR ON GETTING SEARCHED MOVIE AT WORKER SAGA', err);
-    yield put(unsetLoadingSearchedMovieAction());
+    yield put(resetSearchedMovieAction());
+    // yield put(unsetLoadingSearchedMovieAction());
   }
 }
