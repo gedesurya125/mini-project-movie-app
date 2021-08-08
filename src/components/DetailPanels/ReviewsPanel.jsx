@@ -21,7 +21,7 @@ const ReviewsPanel = ({movie_id}) => {
   // console.log('CONSOLE FROM REVIEW PANEL',reviewList);
   useEffect(() => {
     dispatch(getMovieReviewAction(movie_id));
-  },[dispatch, movie_id])
+  },[dispatch, movie_id, movieReviews.reviewed])
   return (
     <div>
       <ReviewForm id_movie = {movie_id} isReviewed = {movieReviews.reviewed}/>
@@ -31,7 +31,7 @@ const ReviewsPanel = ({movie_id}) => {
       <Review/>
       <Review/>
       <Review/> */}
-      {reviewList.length && renderReviews}
+      {reviewList.length ? renderReviews : null}
     </div>
   )
 }

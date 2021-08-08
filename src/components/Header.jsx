@@ -9,7 +9,8 @@ import {
   Button,
   Typography,
   Avatar,
-  IconButton
+  IconButton,
+  ButtonGroup
 } from '@material-ui/core'
 // import SearchIcon from '@material-ui/icons/Search';
 import LoginModal from './LoginModal';
@@ -19,6 +20,7 @@ import { openModalLogInAction } from '../redux/actions/modalAction';
 import { useHistory } from 'react-router-dom'
 import { Autocomplete } from '@material-ui/lab';
 import { getSearchedMovieAction } from '../redux/actions/moviesAction';
+import { sourceUrl } from '../redux/Api/setupAPI';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,7 +70,7 @@ const useStyles = makeStyles(theme => ({
     //   display: 'block'
     // },
   },
-  iconAvatar:{
+  iconAvatar: {
     padding: 0,
   }
 }))
@@ -156,17 +158,17 @@ const Header = () => {
     history.push('/');
   }
 
-  const handleSelectedSearchValue = (event, value) =>{
+  const handleSelectedSearchValue = (event, value) => {
     const selected = searchedMovie.data.find(movie => movie.title === value);
     // console.log('INI MOVIE YANG DICARI BRO: ', selected);
-    if(selected) return history.push(`/details/${selected._id}`);
+    if (selected) return history.push(`/details/${selected._id}`);
     setAutoSearch(state => ({
       ...state,
       value: value
     }))
   }
 
-  const handleSearchInputChange =(event, value) =>{
+  const handleSearchInputChange = (event, value) => {
     setAutoSearch(state => ({
       ...state,
       inputValue: value
@@ -175,7 +177,7 @@ const Header = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(getSearchedMovieAction({title:autoSearch.inputValue, size:15}))
+      dispatch(getSearchedMovieAction({ title: autoSearch.inputValue, size: 15 }))
     }, 800)
   }, [dispatch, autoSearch.inputValue])
   return (
@@ -187,39 +189,41 @@ const Header = () => {
             <Typography className={classes.logoText} component="span" color="textPrimary" variant="h4">MilanTV</Typography>
           </div>
           <div className={classes.search}>
-
-            <Autocomplete
-              freeSolo
-              value={autoSearch.value}
-              onChange={handleSelectedSearchValue}
-              inputValue={autoSearch.inputValue}
-              onInputChange={handleSearchInputChange}
-              id="search-bar"
-              options={options}
-              renderInput={
-                (params) => 
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    size="small"
-                    color="secondary"
-                    fullWidth
-                    placeholder="Search movie ..."
-                  />
-              }
-            />
+            <ButtonGroup fullWidth>
+              {/* <Button>Search</Button> */}
+              <Autocomplete
+                freeSolo
+                value={autoSearch.value}
+                onChange={handleSelectedSearchValue}
+                inputValue={autoSearch.inputValue}
+                onInputChange={handleSearchInputChange}
+                id="search-bar"
+                options={options}
+                renderInput={
+                  (params) =>
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      size="small"
+                      color="secondary"
+                      fullWidth
+                      placeholder="Search movie ..."
+                    />
+                }
+              />
+            </ButtonGroup>
           </div>
           <div className={classes.login}>
             {
               user?.logged_in ? //if Logged In
                 <IconButton className={classes.iconAvatar} onClick={handleUserMenuOpen}>
                   <Avatar
-                    alt=""
-                    src={user?.data?.image}
+                    src={sourceUrl + user?.data?.image}
+                    alt={user?.data?.username[0].toUpperCase()}
                     imgProps={{
                       className: classes.imageAvatar,
                     }}
-                  >{user?.data?.username[0].toUpperCase()}</Avatar>
+                  />
                 </IconButton> : //if not logged In
                 <Button variant="contained" color="primary" onClick={openMoalLogIn}>Login</Button>
             }

@@ -7,11 +7,13 @@ import {
   getMovieReviews, 
   getMovieReviewsByPage, 
   getMovies, 
-  getMoviesTopRating 
+  getMoviesTopRating, 
+  getReviewByMovieIdAndUserToken
 } from "../../Api/movieAPI";
 import * as type from '../../actions/actionTypes';
 import { 
   addMovieReviewAction, 
+  resetReviewByMovieIdAndUserTokenAction, 
   resetSearchedMovieAction, 
   setFoundSearchedMovieAction, 
   setLoadingMovieAction, 
@@ -19,6 +21,7 @@ import {
   setLoadingMovieCategoryAction, 
   setLoadingMovieDetailsAction, 
   setLoadingMovieReviewAction, 
+  setLoadingReviewByMovieIdAndUserTokenAction, 
   setLoadingSearchedMovieAction, 
   setLoadingTopRatingMoviesAction, 
   setMovieActorsAction, 
@@ -26,6 +29,7 @@ import {
   setMovieDetailsAction, 
   setMovieReviewAction,  
   setMovieReviewIsOutAction, 
+  setReviewByMovieIdAndUserTokenAction, 
   setReviewed, 
   setSearchedMovieAction, 
   setTopRatingMoviesAction, 
@@ -34,8 +38,8 @@ import {
   unsetLoadingMovieCategoryAction, 
   unsetLoadingMovieDetailsAction, 
   unsetLoadingMovieReviewAction, 
-  unsetLoadingSearchedMovieAction, 
-  unsetLoadingTopRatingMoviesAction 
+  unsetLoadingReviewByMovieIdAndUserTokenAction, 
+  unsetLoadingTopRatingMoviesAction, 
 } from "../../actions/moviesAction";
 
 export function* setMoviesAsycn (action){
@@ -126,6 +130,7 @@ export function* getMovieActorsAsync(action){
 
 export function* getMovieReviewAsync(action){
   try{
+    // yield put(unsetReviewed());
     yield put(setLoadingMovieReviewAction());
     const response = yield getMovieReviews(action.payload);
     if(response.data.page){
@@ -208,5 +213,24 @@ export function* getSearchedMovieWorker(action){
     console.log('ERROR ON GETTING SEARCHED MOVIE AT WORKER SAGA', err);
     yield put(resetSearchedMovieAction());
     // yield put(unsetLoadingSearchedMovieAction());
+  }
+}
+
+export function* getReviewByMovieIdAndUserIdWorker(action){
+  try{
+    yield put(setLoadingReviewByMovieIdAndUserTokenAction());
+    const userToken = localStorage.getItem('token');
+    const response = yield getReviewByMovieIdAndUserToken(action.payload, userToken);
+    if(response.data.data.length){
+      console.log('REVIEW FOUND AT SAGA WORKER GET REVIEW BY MOVIE ID AND USER TOKEN',response.data.data)
+      yield put(setReviewByMovieIdAndUserTokenAction(response.data.data));
+      yield put(unsetLoadingReviewByMovieIdAndUserTokenAction());
+    }else{
+      console.log('REVIEW NOT FOUND AT SAGA WORKER GET REVIEW BY MOVIE ID AND USER TOKEN');
+      yield put(resetReviewByMovieIdAndUserTokenAction())
+    }
+  }catch(err){
+    console.log('ERROR GETTING USER REVIEW FOR THIS MOVIE AT SAGA WORKER');
+    yield put(unsetLoadingReviewByMovieIdAndUserTokenAction());
   }
 }

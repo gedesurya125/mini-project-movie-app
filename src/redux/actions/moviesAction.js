@@ -52,3 +52,10 @@ export const setLoadingSearchedMovieAction = () => ({type: type.SET_LOADING_SEAR
 export const unsetLoadingSearchedMovieAction = () => ({type: type.UNSET_LOADING_SEARCHED_MOVIE});
 export const setFoundSearchedMovieAction =() => ({type: type.SET_FOUND_SEARCHED_MOVIE});
 export const unsetFoundSearchedMovieAction = () => ({type: type.UNSET_FOUND_SEARCHED_MOVIE});
+
+//search review action
+export const getReviewByMovieIdAndUserTokenAction = (movieId) => ({type: type.GET_REVIEW_BY_MOVIE_AND_USER_TOKEN, payload:movieId});
+export const setReviewByMovieIdAndUserTokenAction = (review) => ({type: type.SET_REVIEW_BY_MOVIE_AND_USER_TOKEN, payload: review});
+export const resetReviewByMovieIdAndUserTokenAction = () => ({type: type.RESET_REVIEW_BY_MOVIE_AND_USER_TOKEN});
+export const setLoadingReviewByMovieIdAndUserTokenAction = () => ({type: type.SET_LOADING_REVIEW_BY_MOVIE_AND_USER_TOKEN});
+export const unsetLoadingReviewByMovieIdAndUserTokenAction = () => ({type: type.UNSET_LOADING_REVIEW_BY_MOVIE_AND_USER_TOKEN});

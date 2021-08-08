@@ -9,6 +9,7 @@ import selectedCategoryReducer from "./reducers/selectedCategoryReducer";
 import movieActorsReducer from "./reducers/movieActorsReducer";
 import movieReviewReducer from "./reducers/movieReviewReducer";
 import searchListReducer from "./reducers/searchListReducer";
+import searchReviewReducer from "./reducers/searchReviewReducer";
 
 const rootReducer = combineReducers({
   movies: moviesReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   selectedCategory: selectedCategoryReducer,
   movieActors: movieActorsReducer,
   movieReviews: movieReviewReducer,
-  searchedMovie: searchListReducer
+  searchedMovie: searchListReducer,
+  searchReview: searchReviewReducer
 })
 
 export default rootReducer;

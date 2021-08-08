@@ -20,4 +20,9 @@ export const createMovieReviewAPI = (movieId, formUrlEncoded, token) => movieAPI
   }}); //movieId is id of movie in strig format, and formUrlEncoded is data in x-www-form-urlEncoded format. params contains: id_user, id_movie, headline, comment, rating
 // export const getMovieByCategory = (page, category) => getMovies({page, size: 10, category, sort:'des'}); //get movie by category
 // /api/v1/movie?page=1&size=10&category=Lol&sort=des
+export const getReviewByMovieIdAndUserToken = (movieId, userToken) => movieAPI.get(`/api/v1/reviews/getreview/${movieId}`,{
+  headers:{
+    "Authorization": userToken
+  }
+})
  
