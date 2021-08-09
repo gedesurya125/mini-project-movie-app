@@ -105,7 +105,7 @@ const DetailsPage = () => {
             <Typography variant="h3" component="h3">{movieDetails?.title}</Typography>
             <div className={classes.rating}>
               <Rating name="half-rating-read" value={movieDetails?.movieInfo?.rating} max={10} size="large" precision={0.1} readOnly />
-              <Typography variant="h5">({movieDetails?.movieInfo.rating}) {movieDetails?.movieInfo.total_review} Reviews</Typography>
+              <Typography variant="h5">({movieDetails?.movieInfo.rating.toFixed(1)}) {movieDetails?.movieInfo.total_review} Reviews</Typography>
             </div>
             <Typography className={classes.briefDescription} variant="body1">
               {movieDetails?.description}

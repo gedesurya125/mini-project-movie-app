@@ -20,4 +20,6 @@ export const getLogedInUser = () => ({type: type.GET_USER});
 export const setLoadingUserAction = () => ({type: type.SET_LOADING_USER});
 export const unsetLoadingUserAction = () => ({type: type.UNSET_LOADING_USER});
 export const signInUserAction = (payload) => ({type: type.SIGN_IN_USER, payload}) //payload berisi {email, password};
-export const updateUserAction = (id, data) => ({type: type.UPDATE_USER, payload:{id, data}}) 
+export const updateUserAction = (id, data) => ({type: type.UPDATE_USER, payload:{id, data}});
+export const openInfoLoginModalAction = () => ({type: type.OPEN_LOGIN_INFO_MODAL});
+export const closeInfoLoginModalAction = () => ({type: type.CLOSE_LOGIN_INFO_MODAL});

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Avatar
   , makeStyles
@@ -7,10 +7,11 @@ import {
   , Grid
   , Button
   , Paper
+  , CircularProgress
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReviewByMovieIdAndUserTokenAction, sendMovieReviewAction } from '../../redux/actions/moviesAction';
+import { getMovieReviewAction, getReviewByMovieIdAndUserTokenAction, sendMovieReviewAction } from '../../redux/actions/moviesAction';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,19 +32,13 @@ const useStyles = makeStyles(theme => ({
 
   informationBoard: {
     padding: theme.spacing(2),
-    // background: theme.palette.primary.light,
     '& .MuiTypography-root': {
       color: theme.palette.common.white,
       weight: theme.typography.fontWeightBold,
     }
   },
   notLogedIn: {
-    // padding: theme.spacing(2),
     background: theme.palette.primary.light,
-    // '& .MuiTypography-root':{
-    //   color: theme.palette.common.white,
-    //   weight: theme.typography.fontWeightBold,
-    // }
   },
 
   reviewed: {
@@ -53,11 +48,13 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-const ReviewForm = ({ id_movie, isReviewed }) => {
+const ReviewForm = ({ id_movie, trigerReload }) => {
   const user = useSelector(state => state.user.data);
   const reviewByUser = useSelector(state => state.searchReview);
+  const movieReviews = useSelector(state => state.movieReviews)
   const dispatch = useDispatch();
   // console.log(user._id);
+  // const [reviewed, setReviewed] = useState(false);
   const [state, setState] = useState({
     id_user: user._id,
     id_movie: id_movie,
@@ -81,20 +78,24 @@ const ReviewForm = ({ id_movie, isReviewed }) => {
     }
     console.log(dataToSend);
     dispatch(sendMovieReviewAction(dataToSend));
+    // dispatch(getReviewByMovieIdAndUserTokenAction(id_movie));
+    trigerReload();
     dispatch(getReviewByMovieIdAndUserTokenAction(id_movie));
-    setState({
-      id_user: user._id,
-      id_movie: id_movie,
+    dispatch(getMovieReviewAction(id_movie))
+    // setReviewed(true);
+    setState(state => ({
+      ...state,
       headline: '',
       comment: '',
       rating: 0,
-    })
+    }))
   };
 
 
-  useEffect(() => {
-    dispatch(getReviewByMovieIdAndUserTokenAction(id_movie));
-  },[dispatch, id_movie])
+  // useEffect(() => {
+    
+    
+  // },[dispatch, id_movie, state])
 
   if (Boolean(reviewByUser.data.length)) return (
     <Paper elevation={2} className={`${classes.informationBoard} ${classes.reviewed}`}>
@@ -132,11 +133,11 @@ const ReviewForm = ({ id_movie, isReviewed }) => {
         <Grid item md={1}></Grid>
         <Grid item xs={12} md={11}>
           <div className={classes.inputForm}>
-            <TextField size="small" fullWidth label="Title" name="headline" value={state.headLine} onChange={handleReviewChange} variant="outlined" color="primary" />
+            <TextField size="small" fullWidth label="Title" name="headline" value={state.headline} onChange={handleReviewChange} variant="outlined" color="primary" />
           </div>
           <div className={classes.inputForm}>
             <TextField multiline minRows={5} size="small" fullWidth label="Leave a Review" name="comment" value={state.comment} onChange={handleReviewChange} variant="outlined" color="primary" />
-            <Button onClick={handleSendReview} className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
+            <Button startIcon={movieReviews.loading || reviewByUser.loading? <CircularProgress size={20} color="secondary"/> : null} onClick={handleSendReview} className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
           </div>
         </Grid>
 

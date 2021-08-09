@@ -1,18 +1,5 @@
 import * as type from '../actions/actionTypes';
 
-// "{
-//   data: {
-//             token : (str)
-//             id : (str)
-//             user_name : (str) 
-//             full_name : (str) 
-//             email : (str)
-//             image : (str)
-//   },
-//  status : 200
-// }"
-
-
 const initialState = {
   data: {
     id: "",
@@ -24,6 +11,8 @@ const initialState = {
   },
   logged_in: false,
   loading: false,
+  openInfoModal: false,
+  
 }
 
 const userReducer = (state = initialState, action) => {
@@ -45,6 +34,14 @@ const userReducer = (state = initialState, action) => {
     case type.UNSET_LOADING_USER: return {
       ...state,
       loading: false
+    };
+    case type.OPEN_LOGIN_INFO_MODAL: return {
+      ...state,
+      openInfoModal: true
+    };
+    case type.CLOSE_LOGIN_INFO_MODAL: return {
+      ...state,
+      openInfoModal: false
     }
     default: return state
   }

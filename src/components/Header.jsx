@@ -59,42 +59,17 @@ const useStyles = makeStyles(theme => ({
   },
 
   imageAvatar: {
-    width: '130%',
-    marginTop: '30%'
+    width: '100%',
+    // marginTop: '30%'
   },
 
   login: {
     marginLeft: theme.spacing(1)
-    // display: 'none',
-    // [theme.breakpoints.up('sm')]:{
-    //   display: 'block'
-    // },
   },
   iconAvatar: {
     padding: 0,
   }
 }))
-
-
-
-// SEARCH BAR DEPEDECIES - MOCK OPTIONS VALUE=====================
-// const options = [
-//   '',
-//   'the avenger',
-//   'seven eleven',
-//   'wining eleven',
-//   'pro evolution soccer',
-//   'DOTA - Defense Of The Ancient',
-//   'Mobile Legends',
-//   'PUBG',
-//   'Need For Speed Most Wanted',
-//   'Nedd For Speed Under Ground',
-//   'Need For Speed Carbon',
-//   'Need For Speed Hot Persuits',
-//   'Final Fantasy IV',
-//   'Bloddy Roar III'
-// ]
-//==============================================================
 
 
 const Header = () => {
