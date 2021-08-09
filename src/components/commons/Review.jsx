@@ -18,21 +18,25 @@ const useStyles = makeStyles(theme => ({
   }
 
 }))
-const Review = () => {
+
+
+const Review = ({review}) => {
   const classes = useStyles();
+
+
   return (
     <Grid container className={classes.root}>
       <Grid item xs={2} sm={1}>
-        <Avatar className={classes.avatarResponsive}>M</Avatar>
+        <Avatar className={classes.avatarResponsive}>{review.reviewer.user_name[0].toUpperCase()}</Avatar>
       </Grid>
       <Grid item xs={10} sm={11} >
-        <Typography>User Name</Typography>
-        <Rating value={6} max={10} size="small" readOnly/>
+        <Typography>{review.reviewer.user_name}</Typography>
+        <Rating value={review.rating} max={10} size="small" readOnly/>
       </Grid>
       <Grid item md={1}></Grid>
       <Grid item xs={12} md={11}>
-        <Typography variant="h5">Headline</Typography>
-        <Typography variant="body1">Proident fugiat sunt sit nisi deserunt in consequat. Ea non mollit id qui magna tempor ut cupidatat aliqua nulla consequat qui adipisicing ad. Culpa commodo elit incididunt dolor ut. Aliquip cupidatat aute consectetur officia elit qui pariatur aliqua. Proident incididunt nostrud sit pariatur pariatur anim.</Typography>
+        <Typography variant="h5">{review.headline}</Typography>
+        <Typography variant="body1">{review.comment}</Typography>
       </Grid>
     </Grid>
   )

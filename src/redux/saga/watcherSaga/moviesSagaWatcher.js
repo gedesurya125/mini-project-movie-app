@@ -4,15 +4,18 @@ import {
   setMoviesAsycn,
   getMoviesTopRatingAsync,
   getMovieCategoryAsync,
-  getMovieActorsAsync
+  getMovieActorsAsync,
+  getMovieReviewAsync,
+  getAndAddMovieReviewAsync,
+  sendMovieReviewAsync,
+  getSearchedMovieWorker,
+  getReviewByMovieIdAndUserIdWorker
 } from "../workerSaga/moviesSagaWorker";
-// import { registerUserAsycn } from "../workerSaga/userSagaWorker";
 import * as type from '../../actions/actionTypes'
 
 
 export function* getMoviesWatcher() {
   yield takeLatest(type.GET_MOVIES, setMoviesAsycn);
-  // yield takeLatest(type.REGISTER_USER, registerUserAsycn);
 }
 
 export function* getMovieDetailsWatcher() {
@@ -27,6 +30,25 @@ export function* getMovieCategoryWatcher() {
   yield takeLatest(type.GET_MOVIE_CATEGORY, getMovieCategoryAsync);
 }
 
-export function* getMovieActorsWatcher(){
+export function* getMovieActorsWatcher() {
   yield takeLatest(type.GET_MOVIE_ACTORS, getMovieActorsAsync);
+}
+
+export function* getMovieReviewWatcher() {
+  yield takeLatest(type.GET_MOVIE_REVIEW, getMovieReviewAsync);
+}
+export function* getAndAddMovieReviewWathcer() {
+  yield takeLatest(type.GET_AND_ADD_MOVIE_REVIEW, getAndAddMovieReviewAsync);
+}
+
+export function* sendMovieReviewWatcher() {
+  yield takeLatest(type.SEND_MOVIE_REVIEW, sendMovieReviewAsync);
+}
+
+export function* getSearchedMovieWatcher() {
+  yield takeLatest(type.GET_SEARCHED_MOVIE, getSearchedMovieWorker);
+}
+
+export function* getReviewByMovieIdAndUserIdWatcher(){
+  yield takeLatest(type.GET_REVIEW_BY_MOVIE_AND_USER_TOKEN, getReviewByMovieIdAndUserIdWorker);
 }

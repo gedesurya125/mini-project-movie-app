@@ -5,7 +5,8 @@ import {
   Card,
   Typography,
   Divider,
-  CardContent
+  CardContent,
+  Paper
 } from '@material-ui/core'
 import React, { useState } from 'react';
 import headerLogo from '../assets/img/headerlogo.png'
@@ -13,6 +14,8 @@ import LoginForm from './loginModalContent/LoginForm';
 import SignUpForm from './loginModalContent/SignUpForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModalLogInAction } from '../redux/actions/modalAction';
+import { Warning } from '@material-ui/icons';
+import { closeInfoLoginModalAction } from '../redux/actions/userAction';
 
 // STYLES =================================================
 const useStyles = makeStyles(theme => ({
@@ -69,6 +72,16 @@ const useStyles = makeStyles(theme => ({
   cardInfo: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  loginInfo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+    background: theme.palette.error.main,
+    color: theme.palette.common.white
+    
   }
 }))
 
@@ -82,10 +95,12 @@ const LoginModal = () => {
   const [displaySignUp, setdisplaySignUp] = useState(false); // sign in or sign up
   const classes = useStyles()
   const dispatch = useDispatch()
-  const {modalLogIn} = useSelector(state => state.modals) //
+  const { modalLogIn } = useSelector(state => state.modals) //
+  const user = useSelector(state => state.user);
 
   const closeModalLogIn = () => {
     dispatch(closeModalLogInAction());
+    dispatch(closeInfoLoginModalAction());
   }
   // console.log(modalLogIn);
   // RETURN =======================================
@@ -105,12 +120,19 @@ const LoginModal = () => {
               <img src={headerLogo} alt="" />
               <Typography variant="h3">MilanTV</Typography>
             </div>
+            {user.openInfoModal ?
+              <Paper className={classes.loginInfo}>
+                <Warning />
+                <Typography>Make sure your email and password corrects</Typography>
+              </Paper>
+              : null
+            }
             <Divider />
             {displaySignUp ? <SignUpForm /> : <LoginForm />}
             <div className={classes.cardInfo}>
               {displaySignUp ?
                 <Typography>Already have an account ?, <span className={`${classes.signLink} ${classes.signInColor}`} onClick={() => setdisplaySignUp(false)}>Sign In</span></Typography> :
-                <Typography>Don't have an account ?, <span className={`${classes.signLink} ${classes.signUpColor}`} onClick={() => setdisplaySignUp(true)}>Sign Up</span></Typography>
+                <Typography>Don't have an account ?, <span className={`${classes.signLink} ${classes.signUpColor}`} onClick={() => {setdisplaySignUp(true); dispatch(closeInfoLoginModalAction())}}>Sign Up</span></Typography>
               }
             </div>
 

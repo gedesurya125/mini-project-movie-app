@@ -29,3 +29,33 @@ export const getMovieActorsAction = (movieId) => ({type: type.GET_MOVIE_ACTORS, 
 export const setMovieActorsAction = (data) => ({type: type.SET_MOVIE_ACTORS, payload: data}) // set data to movieActorsReducer
 export const setLoadingMovieActorsAction = () => ({type: type.SET_LOADING_MOVIE_ACTORS});
 export const unsetLoadingMovieActorsAction = () => ({type: type.UNSET_LOADING_MOVIE_ACTORS});
+
+
+//movie review action
+export const getMovieReviewAction = (movieId) => ({type: type.GET_MOVIE_REVIEW, payload: movieId}); //used with saga it will get the first page
+export const setMovieReviewAction = (reviews) => ({type: type.SET_MOVIE_REVIEW, payload: reviews});
+export const setLoadingMovieReviewAction = () => ({type: type.SET_LOADING_MOVIE_REVIEW});
+export const unsetLoadingMovieReviewAction = () => ({type: type.UNSET_LOADING_MOVIE_REVIEW});
+export const setReviewed = () => ({type: type.SET_REVIEWED});
+export const unsetReviewed = () => ({type: type.UNSET_REVIEWED});
+export const setMovieReviewIsOutAction =() => ({type: type.SET_MOVIE_REVIEW_ISOUT});
+export const unsetMovieReviewIsOutAction = () => ({type: type.UNSET_MOVIE_REVIEW_ISOUT});
+export const getAndAddMovieReviewAction = (movieId, page) => ({type: type.GET_AND_ADD_MOVIE_REVIEW, payload:{movieId, page}}); //used with saga it will get movie based on id and page then add it to movieReviewReducer
+export const addMovieReviewAction = (reviews) => ({type: type.ADD_MOVIE_REVIEW, payload: reviews}); //REVIEwS MUST BE DATA.ALLDATA from the server /it used to LOAD MORE PURPOSE
+export const sendMovieReviewAction = (newReviews) => ({type: type.SEND_MOVIE_REVIEW, payload: newReviews}); //used with saga,  newRevies is an object contain: id_user, id_movie, headline, comment, rating
+export const setToTopMovieReviewAction = (newReviews) => ({type: type.SET_TO_TOP_MOVIE_REVIEW, payload: newReviews});
+
+export const getSearchedMovieAction = (params) => ({type: type.GET_SEARCHED_MOVIE, payload: params}) // this searching is based on movie title, so params will be matched to movie title with params like so : {title: <<pattern>>, size: <<how many movie>>}
+export const setSearchedMovieAction = (data) => ({type: type.SET_SEARCHED_MOVIE, payload: data}) // data here is response of get movie by title that match the pattern, and is count is limited by size, so the params that will be sent to server is like {title: <<pattern>>, size: <<max value have to find>>}
+export const resetSearchedMovieAction = () =>({type: type.RESET_SEARCHED_MOVIE});
+export const setLoadingSearchedMovieAction = () => ({type: type.SET_LOADING_SEARCHED_MOVIE});
+export const unsetLoadingSearchedMovieAction = () => ({type: type.UNSET_LOADING_SEARCHED_MOVIE});
+export const setFoundSearchedMovieAction =() => ({type: type.SET_FOUND_SEARCHED_MOVIE});
+export const unsetFoundSearchedMovieAction = () => ({type: type.UNSET_FOUND_SEARCHED_MOVIE});
+
+//search review action
+export const getReviewByMovieIdAndUserTokenAction = (movieId) => ({type: type.GET_REVIEW_BY_MOVIE_AND_USER_TOKEN, payload:movieId});
+export const setReviewByMovieIdAndUserTokenAction = (review) => ({type: type.SET_REVIEW_BY_MOVIE_AND_USER_TOKEN, payload: review});
+export const resetReviewByMovieIdAndUserTokenAction = () => ({type: type.RESET_REVIEW_BY_MOVIE_AND_USER_TOKEN});
+export const setLoadingReviewByMovieIdAndUserTokenAction = () => ({type: type.SET_LOADING_REVIEW_BY_MOVIE_AND_USER_TOKEN});
+export const unsetLoadingReviewByMovieIdAndUserTokenAction = () => ({type: type.UNSET_LOADING_REVIEW_BY_MOVIE_AND_USER_TOKEN});

@@ -9,7 +9,8 @@ import MovieCard from './MovieCard';
 const useStyles = makeStyles(theme => ({
   movieContainer:{
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
   }
 }))
 const MovieDisplay = ({movies}) => {

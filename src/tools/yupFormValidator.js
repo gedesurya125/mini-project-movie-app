@@ -24,6 +24,7 @@ export const userFormik = {
     password: yup
       .string('Enter your password')
       .min(8, 'Password should be of minimum 8 characters length')
-      .required('Password is required'),
+      .required('Password is required')
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])[\w\W\d]{8,}/gi,'Password must contain at least 1 word, 1 number and 1 special character with minimum length of 8')
   })
 }

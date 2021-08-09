@@ -7,8 +7,9 @@ import {
   Typography
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getMovieDetailsAction } from '../../redux/actions/moviesAction';
+// import { useDispatch } from 'react-redux';
+// import { getMovieDetailsAction } from '../../redux/actions/moviesAction';
+import { sourceUrl } from '../../redux/Api/setupAPI';
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,24 +39,24 @@ const useStyles = makeStyles(theme => ({
 const MovieCard = ({ movie }) => {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
 
   const onCardClick = () =>{
-    console.log('RESPONSE DARI CARD', movie._id);
-    dispatch(getMovieDetailsAction(movie._id, ()=>{
-      history.push(`/details/${movie._id}`);
-    }))
-
+    // console.log('RESPONSE DARI CARD', movie._id);
+    // dispatch(getMovieDetailsAction(movie._id, ()=>{
+    //   history.push(`/details/${movie._id}`);
+    // }))
+    history.push(`/details/${movie._id}`);
   }
   return (
-    <Card className={classes.movieCard}>
+    <Card className={classes.movieCard} elevation={15}>
       <CardActionArea onClick={onCardClick}>
         <CardMedia
           component="img"
           alt="movie-thumbnail"
           // height="200"
-          image={movie.thumbnail}
+          image={sourceUrl+movie.thumbnail}
           title={movie.title}
         />
       </CardActionArea>

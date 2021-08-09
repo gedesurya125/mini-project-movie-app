@@ -45,7 +45,7 @@ const LoginForm = () => {
       .required('username is required'),
     password: yup
       .string('Enter your password')
-      .min(8, 'Password should be of minimum 8 characters length')
+      // .min(8, 'Password should be of minimum 8 characters length')
       .required('Password is required')
   });
 
@@ -59,7 +59,7 @@ const LoginForm = () => {
     initialValues: initialFormikOnLogin,
     validationSchema: validationOnLogin,
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       // alert(JSON.stringify(values));
       dispatch(signInUserAction(values));
 

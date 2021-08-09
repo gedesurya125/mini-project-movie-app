@@ -13,6 +13,7 @@ import {
   Typography
 } from '@material-ui/core'
 import { openModalUpdateUser } from '../redux/actions/modalAction'
+import { sourceUrl } from '../redux/Api/setupAPI'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,7 +65,7 @@ const UserProfilePage = () => {
         <Box className={classes.userBox} display="flex" flexDirection="column" alignItems="center">
           <Card className={classes.cardUser} elevation={3}>
             <CardContent className={classes.cardContent}>
-              <Avatar alt={user.user_name} src={user.image} className={classes.userAvatar} />
+              <Avatar alt={user.user_name} src={sourceUrl+user.image} className={classes.userAvatar} />
               <Typography className={classes.userName} variant="h4">{user.username}</Typography>
               <Typography>{user.fullname}</Typography>
               <Typography>{user.email}</Typography>

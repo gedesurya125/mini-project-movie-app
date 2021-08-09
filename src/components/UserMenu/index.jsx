@@ -24,7 +24,7 @@ const UserMenu = ({open, onClose, anchorEl}) => {
 
   const handleProfileOpen = () =>{
     onClose();
-    history.push('/user/profile/1');
+    history.push('/user/profile');
   }
 
 
