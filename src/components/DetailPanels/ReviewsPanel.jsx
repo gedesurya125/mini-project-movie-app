@@ -33,3 +33,5 @@ const ReviewsPanel = ({ movie_id }) => {
 }
 
 export default ReviewsPanel
+
+

@@ -8,10 +8,13 @@ import {
   , Button
   , Paper
   , CircularProgress
+  , Collapse
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovieReviewAction, getReviewByMovieIdAndUserTokenAction, sendMovieReviewAction } from '../../redux/actions/moviesAction';
+import { Info } from '@material-ui/icons';
+import OwnReview from './OwnReview';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,9 +35,14 @@ const useStyles = makeStyles(theme => ({
 
   informationBoard: {
     padding: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .MuiTypography-root': {
       color: theme.palette.common.white,
       weight: theme.typography.fontWeightBold,
+      marginRight: 'auto',
+      marginLeft: theme.spacing(1)
     }
   },
   notLogedIn: {
@@ -43,12 +51,17 @@ const useStyles = makeStyles(theme => ({
 
   reviewed: {
     background: theme.palette.success.main
+  },
+  ownReview:{
+    // padding: theme.spacing(2, 0, 1),
+    background: theme.palette.success.dark
   }
 
 
 }))
 
 const ReviewForm = ({ id_movie, trigerReload }) => {
+  const [showMyReview, setShowMyReview] = useState(false);
   const user = useSelector(state => state.user.data);
   const reviewByUser = useSelector(state => state.searchReview);
   const movieReviews = useSelector(state => state.movieReviews)
@@ -79,7 +92,6 @@ const ReviewForm = ({ id_movie, trigerReload }) => {
     console.log(dataToSend);
     dispatch(sendMovieReviewAction(dataToSend));
     // dispatch(getReviewByMovieIdAndUserTokenAction(id_movie));
-    trigerReload();
     dispatch(getReviewByMovieIdAndUserTokenAction(id_movie));
     dispatch(getMovieReviewAction(id_movie))
     // setReviewed(true);
@@ -89,18 +101,30 @@ const ReviewForm = ({ id_movie, trigerReload }) => {
       comment: '',
       rating: 0,
     }))
+    trigerReload();
   };
+
+  const toggleShowMyReview = () => {
+    setShowMyReview(state => !state);
+  }
 
 
   // useEffect(() => {
-    
-    
+
+
   // },[dispatch, id_movie, state])
 
   if (Boolean(reviewByUser.data.length)) return (
-    <Paper elevation={2} className={`${classes.informationBoard} ${classes.reviewed}`}>
-      <Typography variant="body1" align="center"> You had reviewed this movie</Typography>
-    </Paper>
+    <div>
+      <Paper elevation={2} className={`${classes.informationBoard} ${classes.reviewed}`}>
+        <Info />
+        <Typography variant="body1" align="center"> You had reviewed this movie</Typography>
+        <Button onClick={toggleShowMyReview} variant="contained" color="primary">{!showMyReview ? "Show" : "Hide"}</Button>
+      </Paper>
+      <Collapse in={showMyReview} className={classes.ownReview}>
+        <OwnReview userReview={reviewByUser.data[0]} />
+      </Collapse>
+    </div>
   );
 
   if (!user._id) return (
@@ -137,7 +161,7 @@ const ReviewForm = ({ id_movie, trigerReload }) => {
           </div>
           <div className={classes.inputForm}>
             <TextField multiline minRows={5} size="small" fullWidth label="Leave a Review" name="comment" value={state.comment} onChange={handleReviewChange} variant="outlined" color="primary" />
-            <Button startIcon={movieReviews.loading || reviewByUser.loading? <CircularProgress size={20} color="secondary"/> : null} onClick={handleSendReview} className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
+            <Button startIcon={movieReviews.loading || reviewByUser.loading ? <CircularProgress size={20} color="secondary" /> : null} onClick={handleSendReview} className={classes.reviewButton} variant="contained" color="primary">Send Review</Button>
           </div>
         </Grid>
 
