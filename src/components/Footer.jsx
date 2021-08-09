@@ -2,7 +2,8 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import "@fontsource/roboto";
 import "../assets/styles/Footer.css";
-import footerLogo from "../assets/images/footerLogo.png";
+// import footerLogo from "../assets/images/footerLogo.png";
+import footerLogo from "../assets/img/tiger.png"
 import gPlayLogo from "../assets/images/gplayLogo.png";
 import appStoreLogo from "../assets/images/appStoreLogo.png";
 import facebookLogo from "../assets/images/facebookLogo.png";
@@ -36,7 +37,7 @@ const Footer = () => {
                   <img src={footerLogo} alt="..." />
                 </div>
                 <div className="footer__title">
-                  <h1>MilanTV</h1>
+                  <h1>MacanTv</h1>
                 </div>
               </div>
               <div className="footer__content">

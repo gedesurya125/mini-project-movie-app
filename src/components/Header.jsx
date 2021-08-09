@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import headerlogo from '../assets/img/headerlogo.png'
+// import headerlogo from '../assets/img/headerlogo.png'
+import headerlogo from '../assets/img/tiger.png';
 import {
   AppBar,
   Container,
@@ -24,10 +25,12 @@ import { sourceUrl } from '../redux/Api/setupAPI';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    background: 'white'
+    background: '#3E2211'
   },
   logo: {
     display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0.3),
     '&:hover': {
       cursor: 'pointer'
     }
@@ -68,6 +71,19 @@ const useStyles = makeStyles(theme => ({
   },
   iconAvatar: {
     padding: 0,
+  },
+  inputSearch:{
+    color: 'black',
+    // background: 'white'
+    background: 'white'
+  },
+  inputRoot:{
+    '& .MuiInputBase-input':{
+      color: 'white',
+    },
+  },
+  outlineIput:{
+    borderColor: 'white !important'
   }
 }))
 
@@ -161,7 +177,7 @@ const Header = () => {
         <Toolbar variant="dense" disableGutters className={classes.toolbar}>
           <div onClick={redirectToHome} className={classes.logo}>
             <img src={headerlogo} alt="" width="50em" />
-            <Typography className={classes.logoText} component="span" color="textPrimary" variant="h4">MilanTV</Typography>
+            <Typography className={classes.logoText} component="span" variant="h4">MacanTv</Typography>
           </div>
           <div className={classes.search}>
             {/* <ButtonGroup fullWidth> */}
@@ -172,7 +188,7 @@ const Header = () => {
                 onChange={handleSelectedSearchValue}
                 inputValue={autoSearch.inputValue}
                 onInputChange={handleSearchInputChange}
-                id="search-bar"
+                id="search-bar" 
                 options={options}
                 renderInput={
                   (params) =>
@@ -180,7 +196,9 @@ const Header = () => {
                       {...params}
                       variant="outlined"
                       size="small"
-                      color="secondary"
+                      color="primary"
+                      className={classes.inputRoot}
+                      focused
                       fullWidth
                       placeholder="Search movie ..."
                     />

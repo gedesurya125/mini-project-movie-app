@@ -9,7 +9,9 @@ import {
   Paper
 } from '@material-ui/core'
 import React, { useState } from 'react';
-import headerLogo from '../assets/img/headerlogo.png'
+// import headerLogo from '../assets/img/headerlogo.png'
+import headerLogo from '../assets/img/tiger.png'
+
 import LoginForm from './loginModalContent/LoginForm';
 import SignUpForm from './loginModalContent/SignUpForm';
 import { useSelector, useDispatch } from 'react-redux';
@@ -118,7 +120,7 @@ const LoginModal = () => {
 
             <div className={classes.logoCard}>
               <img src={headerLogo} alt="" />
-              <Typography variant="h3">MilanTV</Typography>
+              <Typography variant="h3">MacanTV</Typography>
             </div>
             {user.openInfoModal ?
               <Paper className={classes.loginInfo}>
