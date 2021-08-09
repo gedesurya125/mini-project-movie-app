@@ -1,7 +1,7 @@
 import { put } from "@redux-saga/core/effects";
 import * as type from '../../actions/actionTypes'
 import { closeModalLogInAction, closeModalUpdateUser } from "../../actions/modalAction";
-import { logOutUser, openInfoLoginModalAction, setLoadingUserAction, setUserAction, unsetLoadingUserAction } from "../../actions/userAction";
+import { closeInfoLoginModalAction, logOutUser, openInfoLoginModalAction, setLoadingUserAction, setUserAction, unsetLoadingUserAction } from "../../actions/userAction";
 import { getCurrentUser, registerUser, signInUserAPI, updateUserAPI } from "../../Api/userAPI";
 import FormData from "form-data";
 
@@ -56,6 +56,7 @@ export function* signInUserAsync(action) {
     if (response.data.data) {
       localStorage.setItem('token', `Bearer ${response.data.data.token}`);
       yield put({ type: type.SET_USER, payload: response.data.data });
+      yield put(closeInfoLoginModalAction());
       yield put(unsetLoadingUserAction());
       yield put(closeModalLogInAction());
     } else {
