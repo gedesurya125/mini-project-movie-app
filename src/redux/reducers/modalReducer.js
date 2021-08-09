@@ -2,7 +2,8 @@ import * as type from '../actions/actionTypes'
 
 const initialState = {
   modalLogIn: false,
-  modalUpdateUser: false
+  modalUpdateUser: false,
+  modalUpdateReview: false,
 }
 
 const modalReducer = (state = initialState, action) => {
@@ -21,6 +22,14 @@ const modalReducer = (state = initialState, action) => {
     case type.CLOSE_MODAL_UPDATE_USER: return {
       ...state,
       modalUpdateUser: false
+    };
+    case type.OPEN_MODAL_UPDATE_REVIEW: return {
+      ...state,
+      modalUpdateReview: true
+    };
+    case type.CLOSE_MODAL_UPDATE_REVIEW: return {
+      ...state,
+      modalUpdateReview: false
     }
     default: return state;
   }

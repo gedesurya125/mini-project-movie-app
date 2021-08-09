@@ -8,7 +8,8 @@ import {
   getMovieReviewsByPage, 
   getMovies, 
   getMoviesTopRating, 
-  getReviewByMovieIdAndUserToken
+  getReviewByMovieIdAndUserToken,
+  updateReview,
 } from "../../Api/movieAPI";
 import * as type from '../../actions/actionTypes';
 import { 
@@ -33,14 +34,17 @@ import {
   setReviewed, 
   setSearchedMovieAction, 
   setTopRatingMoviesAction, 
+  setUpdateReviewFaildAction, 
   unsetLoadingMovieAction, 
   unsetLoadingMovieActorsAction, 
   unsetLoadingMovieCategoryAction, 
   unsetLoadingMovieDetailsAction, 
   unsetLoadingMovieReviewAction, 
   unsetLoadingReviewByMovieIdAndUserTokenAction, 
-  unsetLoadingTopRatingMoviesAction, 
+  unsetLoadingTopRatingMoviesAction,
+  unsetUpdateReviewFailedAction, 
 } from "../../actions/moviesAction";
+import { closeModalUpdateReviewAction } from "../../actions/modalAction";
 
 export function* setMoviesAsycn (action){
   try{
@@ -136,6 +140,8 @@ export function* getMovieReviewAsync(action){
     if(response.data.page){
       yield put(setMovieReviewAction(response.data));
       yield put(unsetLoadingMovieReviewAction());
+      yield put(unsetUpdateReviewFailedAction());
+      action.callback();
     }else{
       console.log('ERROR ON SETTING MOVIE REVIEW AT SAGA WORKER');
       yield put(unsetLoadingMovieReviewAction());
@@ -185,6 +191,7 @@ export function* sendMovieReviewAsync(action){
       console.log('REVIEW HAS BEEN SENT BROO');
       yield put(setReviewed());
       yield put(unsetLoadingMovieReviewAction());
+      action.callback();
     }else{
       console.log('THIS MOVIE HAS BEEN REVIEWED - AT SAGA WORKER');
       yield put(unsetLoadingMovieReviewAction());
@@ -194,6 +201,54 @@ export function* sendMovieReviewAsync(action){
     yield put(unsetLoadingMovieReviewAction());
   }
 }
+
+export function* updateMovieReviewAsync (action){
+  const {reviewId, newReview} = action.payload;
+  try{
+    yield put(setLoadingMovieReviewAction());
+    const params = new URLSearchParams();
+    params.append('headline', newReview.headline);
+    params.append('comment', newReview.comment);
+    params.append('rating', newReview.rating);
+    const token = localStorage.getItem('token');
+    const response = yield updateReview(reviewId, params, token);
+    if(response.data.message){
+      console.log('MOVIE REVIEW SUCESSFULLI UPDATED')
+      //ganti isi searched review
+      const newReview = response.data.updated_data;
+      yield put(setSearchedMovieAction([
+        {
+          _id: newReview.id_review,
+          id_user: newReview.reviewer.id,
+          id_movie: '',
+          headline: newReview.headline,
+          comment: newReview.comment,
+          rating: newReview.rating,
+        }
+      ])) // must be an array
+      // yield put(setToTopMovieReviewAction(newReview)); // argument must be an object
+      yield put(unsetUpdateReviewFailedAction());
+      yield put(unsetLoadingMovieReviewAction());
+      yield put(closeModalUpdateReviewAction());
+      action.callback();
+    }else{
+      console.log('UPDATE REVIEW FAILED AT SAGA WORKER UPDATE REVIEW');
+      yield put(setUpdateReviewFaildAction());
+      yield put(unsetLoadingMovieReviewAction());
+      yield put(closeModalUpdateReviewAction());
+
+    }
+
+
+  }catch(err){
+    console.log('ERROR UPDATING MOVIE REVIEW AT SAGA WORKER updateMovieAsync')
+    yield put(unsetLoadingMovieReviewAction());
+    yield put(setUpdateReviewFaildAction());
+    yield put(closeModalUpdateReviewAction());
+
+  }
+}
+
 
 export function* getSearchedMovieWorker(action){
   try{
@@ -225,6 +280,7 @@ export function* getReviewByMovieIdAndUserIdWorker(action){
       console.log('REVIEW FOUND AT SAGA WORKER GET REVIEW BY MOVIE ID AND USER TOKEN',response.data.data)
       yield put(setReviewByMovieIdAndUserTokenAction(response.data.data));
       yield put(unsetLoadingReviewByMovieIdAndUserTokenAction());
+      action.callback();
     }else{
       console.log('REVIEW NOT FOUND AT SAGA WORKER GET REVIEW BY MOVIE ID AND USER TOKEN');
       yield put(resetReviewByMovieIdAndUserTokenAction())

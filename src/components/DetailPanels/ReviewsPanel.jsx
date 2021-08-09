@@ -1,5 +1,5 @@
 import { Divider, makeStyles } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReviewForm from '../commons/ReviewForm';
 import ReviewListContainer from './ReviewListContainer';
 import { useDispatch } from 'react-redux';
@@ -12,26 +12,28 @@ const useStyles = makeStyles(theme => ({
 }))
 const ReviewsPanel = ({ movie_id }) => {
   const dispatch = useDispatch();
-  const [trigerReload, setTrigerReload] = useState(false);
+  // const [trigerReload, setTrigerReload] = useState(false);
   const classes = useStyles();
 
-  const handleTrigerReload = () => {
-    setTrigerReload(state => !state);
-  };
+  // const handleTrigerReload = () => {
+  //   setTrigerReload(state => !state);
+  // };
 
   useEffect(() => {
     dispatch(getMovieReviewAction(movie_id));
     dispatch(getReviewByMovieIdAndUserTokenAction(movie_id));
-  },[dispatch, movie_id, trigerReload])
+  },[dispatch, movie_id])
   return (
     <div>
-      <ReviewForm id_movie={movie_id} trigerReload={handleTrigerReload} />
+      <ReviewForm id_movie={movie_id}/>
       <Divider className={classes.divider} />
       <ReviewListContainer />
     </div>
   )
 }
 
-export default ReviewsPanel
+
+
+export default ReviewsPanel;
 
 

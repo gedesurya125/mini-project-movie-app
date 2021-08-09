@@ -8,6 +8,7 @@ const initialState = {
   },
   loading: false,
   reviewed: false,
+  failedUpdate: false,
   isOut: false
 }
 const movieReviewReducer = (state = initialState, action) => {

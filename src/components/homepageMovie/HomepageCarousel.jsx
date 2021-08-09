@@ -18,10 +18,12 @@ const useStyles = makeStyles(theme => ({
   },
   imageContainer: {
     // flexShrink: '1',
+    // minHeight: '50em',
     position: 'relative',
     '& img': {
       width: '100%',
-    }
+    },
+    // background: theme.palette.common.black
   },
   indicatorContainer: {
     position: 'absolute',

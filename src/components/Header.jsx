@@ -10,7 +10,7 @@ import {
   Typography,
   Avatar,
   IconButton,
-  ButtonGroup
+  // ButtonGroup
 } from '@material-ui/core'
 // import SearchIcon from '@material-ui/icons/Search';
 import LoginModal from './LoginModal';
@@ -164,7 +164,7 @@ const Header = () => {
             <Typography className={classes.logoText} component="span" color="textPrimary" variant="h4">MilanTV</Typography>
           </div>
           <div className={classes.search}>
-            <ButtonGroup fullWidth>
+            {/* <ButtonGroup fullWidth> */}
               {/* <Button>Search</Button> */}
               <Autocomplete
                 freeSolo
@@ -186,7 +186,7 @@ const Header = () => {
                     />
                 }
               />
-            </ButtonGroup>
+            {/* </ButtonGroup> */}
           </div>
           <div className={classes.login}>
             {

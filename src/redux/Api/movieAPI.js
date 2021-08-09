@@ -24,5 +24,11 @@ export const getReviewByMovieIdAndUserToken = (movieId, userToken) => movieAPI.g
   headers:{
     "Authorization": userToken
   }
-})
+});
+
+export const updateReview = (reviewId, formUrlEncoded, userToken) => movieAPI.put(`/api/v1/reviews/${reviewId}`, formUrlEncoded, {
+  headers:{
+    "Authorization": userToken
+  }
+} )
  

@@ -9,7 +9,8 @@ import {
   getAndAddMovieReviewAsync,
   sendMovieReviewAsync,
   getSearchedMovieWorker,
-  getReviewByMovieIdAndUserIdWorker
+  getReviewByMovieIdAndUserIdWorker,
+  updateMovieReviewAsync
 } from "../workerSaga/moviesSagaWorker";
 import * as type from '../../actions/actionTypes'
 
@@ -51,4 +52,8 @@ export function* getSearchedMovieWatcher() {
 
 export function* getReviewByMovieIdAndUserIdWatcher(){
   yield takeLatest(type.GET_REVIEW_BY_MOVIE_AND_USER_TOKEN, getReviewByMovieIdAndUserIdWorker);
+}
+
+export function* updateMovieReviewWatcher(){
+  yield takeLatest(type.UPDATE_MOVIE_REVIEW, updateMovieReviewAsync);
 }

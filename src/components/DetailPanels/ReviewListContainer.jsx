@@ -1,10 +1,10 @@
 import React from 'react';
 import Review from '../commons/Review';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
-const ReviewListContainer = () => {
+const ReviewListContainer = ({movieReviews}) => {
   
-  const movieReviews = useSelector(state => state.movieReviews);
+  // const movieReviews = useSelector(state => state.movieReviews);
   const reviewList = movieReviews.data.allData;
   const renderReviews = reviewList.map(review => (<Review key={review.id_review} review={review} />));
   
@@ -15,4 +15,8 @@ const ReviewListContainer = () => {
   )
 }
 
-export default ReviewListContainer
+const mapStateToProps = (state) => ({
+  movieReviews: state.movieReviews
+})
+
+export default connect(mapStateToProps)(ReviewListContainer);

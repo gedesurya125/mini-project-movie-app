@@ -1,6 +1,10 @@
 import React from 'react'
 import { makeStyles, Typography, Grid, Button, Container } from '@material-ui/core'
-import { Rating } from '@material-ui/lab'
+import { Rating } from '@material-ui/lab';
+import { useDispatch } from 'react-redux';
+import { openModalUpdateReviewAction } from '../../redux/actions/modalAction';
+import EditReviewModal from '../EditReviewModal/EditReviewModal';
+import { connect } from 'react-redux';
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,9 +29,15 @@ const useStyles = makeStyles(theme => ({
 
 }))
 
-const OwnReview = ({ userReview }) => {
+const OwnReview = ({ userReview, id_movie }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
+  console.log('ISI DARI USER REVIEW DI OWN REVIEW',userReview)
+  const handleOpenModalUpdateReview = () => {
+    dispatch(openModalUpdateReviewAction());
+  }
   return (
+    <>
     <Grid container className={classes.root}>
       <Grid item xs={12} >
         <Container>
@@ -42,13 +52,16 @@ const OwnReview = ({ userReview }) => {
       </Grid>
       <Grid item xs={12}>
         <Container className={classes.editButtonContainer}>
-          <Button variant="contained" color="primary">Edit</Button>
-          <Button variant="contained" color="secondary">Delete</Button>
-
+          <Button onClick={handleOpenModalUpdateReview} variant="contained" color="primary">Edit</Button>
         </Container>
       </Grid>
     </Grid>
+    <EditReviewModal id_movie={id_movie}/>
+    </>
   )
 }
 
-export default OwnReview
+const mapStateToProps = (state) => ({
+  userReview: state.searchReview.data[0]
+})
+export default connect(mapStateToProps)(OwnReview)
