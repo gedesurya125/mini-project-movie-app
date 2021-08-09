@@ -69,7 +69,7 @@ const OverViewPanel = ({ movieDetails }) => {
         {renderMovieInfo}
       </div>
 
-      <div className={classes.paddingTop6} id="trailer-movie">
+      <div className={classes.paddingTop6}>
         <DetailTitle>Trailer</DetailTitle>
         <div className={classes.trailer}>
           <iframe style={{ width: '80vw', height: '45.2vw' }} title="trailer"
