@@ -1,7 +1,7 @@
 import { put } from "@redux-saga/core/effects";
 import * as type from '../../actions/actionTypes'
 import { closeModalLogInAction, closeModalUpdateUser } from "../../actions/modalAction";
-import { closeInfoLoginModalAction, logOutUser, openInfoLoginModalAction, setLoadingUserAction, setUserAction, unsetLoadingUserAction } from "../../actions/userAction";
+import { closeInfoLoginModalAction, logOutUser, openInfoLoginModalAction, openRegisterInfoAction, setLoadingUserAction, setUserAction, unsetLoadingUserAction } from "../../actions/userAction";
 import { getCurrentUser, registerUser, signInUserAPI, updateUserAPI } from "../../Api/userAPI";
 import FormData from "form-data";
 
@@ -22,7 +22,9 @@ export function* registerUserAsycn(action) {
     yield put(unsetLoadingUserAction());
     yield put(closeModalLogInAction());
   } catch (err) {
-    console.log(err)
+    console.log('ERROR ON USER REGISTRATION AT SAGA WORKER',err);
+    yield put(unsetLoadingUserAction());
+    yield put(openRegisterInfoAction());
   }
 }
 

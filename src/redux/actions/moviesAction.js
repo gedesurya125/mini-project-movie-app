@@ -6,7 +6,7 @@ export const setLoadingMovieAction = () => ({type: type.SET_LOADING_MOVIE});
 export const unsetLoadingMovieAction = () => ({type: type.UNSET_LOADING_MOVIE});
 
 //movie details
-export const getMovieDetailsAction = (movieId, callback) => ({type: type.GET_MOVIE_DETAILS, payload: movieId, callback}); // ADDING CALLBACK
+export const getMovieDetailsAction = (movieId, callback = () => {}) => ({type: type.GET_MOVIE_DETAILS, payload: movieId, callback}); // ADDING CALLBACK
 export const setMovieDetailsAction = (movie) => ({type: type.SET_MOVIE_DETAILS, payload: movie}); // movie must be and object
 export const setLoadingMovieDetailsAction = () => ({type: type.SET_LOADING_MOVIE_DETAILS});
 export const unsetLoadingMovieDetailsAction = () => ({type: type.UNSET_LOADING_MOVIE_DETAILS});

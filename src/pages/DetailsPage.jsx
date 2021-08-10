@@ -3,7 +3,11 @@ import { alpha, Button, Container, makeStyles, Typography } from '@material-ui/c
 import { Rating, Skeleton } from '@material-ui/lab';
 import DetailsTab from '../components/DetailsTab';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { 
+  // useSelector, 
+  useDispatch 
+} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   getMovieActorsAction
   , getMovieDetailsAction
@@ -11,9 +15,9 @@ import {
 } from '../redux/actions/moviesAction';
 import { sourceUrl } from '../redux/Api/setupAPI';
 
-const DetailsPage = () => {
+const DetailsPage = ({movieDetails}) => {
   const dispatch = useDispatch();
-  const movieDetails = useSelector(state => state.movieDetails.data);
+  // const movieDetails = useSelector(state => state.movieDetails.data);
   const useStyles = makeStyles(theme => ({
     posterContainer: {
       // height: '91vh',
@@ -130,4 +134,8 @@ const DetailsPage = () => {
   )
 }
 
-export default DetailsPage
+const mapStateToProps = (state) => ({
+  movieDetails: state.movieDetails.data
+})
+
+export default connect(mapStateToProps)(DetailsPage)

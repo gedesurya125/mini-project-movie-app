@@ -39,7 +39,8 @@ export const UNSET_LOADING_USER = "UNSET_LOADING_USER";
 export const SIGN_IN_USER = "SIGN_IN_USER"; // used in saga
 export const OPEN_LOGIN_INFO_MODAL = "OPEN_LOGIN_INFO_MODAL";
 export const CLOSE_LOGIN_INFO_MODAL = "CLOSE_LOGIN_INFO_MODAL";
-
+export const OPEN_REGISTER_INFO = "OPEN_REGISTER_INFO";
+export const CLOSE_REGISTER_INFO = "CLOSE_REGISTER_INFO";
 
 // modal Reducer ====================
 export const SET_MODAL_LOGIN_OPEN = "SET_MODAL_LOGIN_OPEN";
