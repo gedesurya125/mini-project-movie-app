@@ -23,3 +23,5 @@ export const signInUserAction = (payload) => ({type: type.SIGN_IN_USER, payload}
 export const updateUserAction = (id, data) => ({type: type.UPDATE_USER, payload:{id, data}});
 export const openInfoLoginModalAction = () => ({type: type.OPEN_LOGIN_INFO_MODAL});
 export const closeInfoLoginModalAction = () => ({type: type.CLOSE_LOGIN_INFO_MODAL});
+export const openRegisterInfoAction = () => ({type: type.OPEN_REGISTER_INFO});
+export const closeRegisterInfoAction = () => ({type: type.CLOSE_REGISTER_INFO});

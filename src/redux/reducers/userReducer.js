@@ -11,7 +11,8 @@ const initialState = {
   },
   logged_in: false,
   loading: false,
-  openInfoModal: false,
+  openInfoModal: false, //this is for login state
+  openRegisterInfo: false // this id for register state
   
 }
 
@@ -42,6 +43,14 @@ const userReducer = (state = initialState, action) => {
     case type.CLOSE_LOGIN_INFO_MODAL: return {
       ...state,
       openInfoModal: false
+    };
+    case type.OPEN_REGISTER_INFO: return {
+      ...state,
+      openRegisterInfo: true
+    };
+    case type.CLOSE_REGISTER_INFO: return {
+      ...state,
+      openRegisterInfo: false
     }
     default: return state
   }

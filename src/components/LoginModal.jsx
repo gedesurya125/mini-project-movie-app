@@ -17,7 +17,7 @@ import SignUpForm from './loginModalContent/SignUpForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModalLogInAction } from '../redux/actions/modalAction';
 import { Warning } from '@material-ui/icons';
-import { closeInfoLoginModalAction } from '../redux/actions/userAction';
+import { closeInfoLoginModalAction, closeRegisterInfoAction } from '../redux/actions/userAction';
 
 // STYLES =================================================
 const useStyles = makeStyles(theme => ({
@@ -103,6 +103,7 @@ const LoginModal = () => {
   const closeModalLogIn = () => {
     dispatch(closeModalLogInAction());
     dispatch(closeInfoLoginModalAction());
+    dispatch(closeRegisterInfoAction());
   }
   // console.log(modalLogIn);
   // RETURN =======================================
@@ -129,11 +130,18 @@ const LoginModal = () => {
               </Paper>
               : null
             }
+            {user.openRegisterInfo ?
+              <Paper className={classes.loginInfo}>
+                <Warning />
+                <Typography>Username or email already used</Typography>
+              </Paper>
+              : null
+            }
             <Divider />
             {displaySignUp ? <SignUpForm /> : <LoginForm />}
             <div className={classes.cardInfo}>
               {displaySignUp ?
-                <Typography>Already have an account ?, <span className={`${classes.signLink} ${classes.signInColor}`} onClick={() => setdisplaySignUp(false)}>Sign In</span></Typography> :
+                <Typography>Already have an account ?, <span className={`${classes.signLink} ${classes.signInColor}`} onClick={() => {setdisplaySignUp(false); dispatch(closeRegisterInfoAction())}}>Sign In</span></Typography> :
                 <Typography>Don't have an account ?, <span className={`${classes.signLink} ${classes.signUpColor}`} onClick={() => {setdisplaySignUp(true); dispatch(closeInfoLoginModalAction())}}>Sign Up</span></Typography>
               }
             </div>

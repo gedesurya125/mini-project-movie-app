@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModalUpdateReviewAction } from '../../redux/actions/modalAction';
 import { Divider, TextField, Typography, makeStyles, Button, Box, CircularProgress, Paper } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import { getMovieReviewAction, getReviewByMovieIdAndUserTokenAction, updateMovieReviewAction } from '../../redux/actions/moviesAction';
+import { getMovieDetailsAction, getMovieReviewAction, getReviewByMovieIdAndUserTokenAction, updateMovieReviewAction } from '../../redux/actions/moviesAction';
 import { Warning } from '@material-ui/icons';
 
 
@@ -67,7 +67,9 @@ const EditReviewModal = ({id_movie}) => {
     // console.log('DATA YANG AKAN DIKIRIM ADALAH', dataToSend, reviewId);
     dispatch(updateMovieReviewAction(reviewId, dataToSend, () => {
       dispatch(getMovieReviewAction(id_movie, () => {
-        dispatch(getReviewByMovieIdAndUserTokenAction(id_movie))
+        dispatch(getReviewByMovieIdAndUserTokenAction(id_movie, () => {
+          dispatch(getMovieDetailsAction(id_movie))
+        }))
       }))
     }));
 

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMovieReviewAction, getReviewByMovieIdAndUserTokenAction, sendMovieReviewAction } from '../../redux/actions/moviesAction';
+import { getMovieDetailsAction, getMovieReviewAction, getReviewByMovieIdAndUserTokenAction, sendMovieReviewAction } from '../../redux/actions/moviesAction';
 import { Info } from '@material-ui/icons';
 import OwnReview from './OwnReview';
 import { sourceUrl } from '../../redux/Api/setupAPI';
@@ -88,6 +88,7 @@ const ReviewForm = ({ id_movie }) => {
   }
   const classes = useStyles();
 
+
   const handleSendReview = () => {
     const dataToSend = {
       ...state,
@@ -96,7 +97,9 @@ const ReviewForm = ({ id_movie }) => {
     console.log(dataToSend);
     dispatch(sendMovieReviewAction(dataToSend,() => {
       dispatch(getReviewByMovieIdAndUserTokenAction(id_movie, () => {
-        dispatch(getMovieReviewAction(id_movie))
+        dispatch(getMovieReviewAction(id_movie, () => {
+          dispatch(getMovieDetailsAction(id_movie))
+        }))
       }));
     }));
     setState(state => ({
